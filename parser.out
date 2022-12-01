@@ -1,0 +1,3806 @@
+Grammar:
+
+Rule 0     S' -> program
+Rule 1     program -> function
+Rule 2     function -> VOID identifier formal_parameters block
+Rule 3     function -> identifier identifier formal_parameters block
+Rule 4     block -> body
+Rule 5     block -> types body
+Rule 6     block -> labels body
+Rule 7     block -> variables body
+Rule 8     block -> functions body
+Rule 9     block -> variables functions body
+Rule 10    block -> types functions body
+Rule 11    block -> types variables body
+Rule 12    block -> labels functions body
+Rule 13    block -> labels variables body
+Rule 14    block -> labels types body
+Rule 15    block -> types variables functions body
+Rule 16    block -> labels variables functions body
+Rule 17    block -> labels types variables body
+Rule 18    block -> labels types functions body
+Rule 19    block -> labels types variables functions body
+Rule 20    body -> LBRACE statements RBRACE
+Rule 21    statements -> <empty>
+Rule 22    statements -> statement statements
+Rule 23    variables -> VARS variables_n
+Rule 24    variables_n -> identifier_list COLON vartype SCOLON
+Rule 25    variables_n -> identifier_list COLON vartype SCOLON variables_n
+Rule 26    types -> TYPES types_n
+Rule 27    types_n -> identifier ASSIGN vartype SCOLON
+Rule 28    types_n -> identifier ASSIGN vartype SCOLON types_n
+Rule 29    functions -> FUNCTIONS functions_n
+Rule 30    functions_n -> function
+Rule 31    functions_n -> function functions_n
+Rule 32    statement -> compound
+Rule 33    statement -> unlabeled_statement
+Rule 34    statement -> identifier COLON compound
+Rule 35    statement -> identifier COLON unlabeled_statement
+Rule 36    unlabeled_statement -> empty_statement
+Rule 37    unlabeled_statement -> repetitive
+Rule 38    unlabeled_statement -> conditional
+Rule 39    unlabeled_statement -> return_rule
+Rule 40    unlabeled_statement -> goto
+Rule 41    unlabeled_statement -> function_call_statement
+Rule 42    unlabeled_statement -> assignment
+Rule 43    unlabeled_statements -> unlabeled_statement
+Rule 44    unlabeled_statements -> unlabeled_statement unlabeled_statements
+Rule 45    goto -> GOTO identifier SCOLON
+Rule 46    return_rule -> RETURN SCOLON
+Rule 47    return_rule -> RETURN expression SCOLON
+Rule 48    empty_statement -> SCOLON
+Rule 49    conditional -> IF LPAREN expression RPAREN compound
+Rule 50    conditional -> IF LPAREN expression RPAREN compound ELSE compound
+Rule 51    repetitive -> WHILE expression compound
+Rule 52    compound -> LBRACE unlabeled_statements RBRACE
+Rule 53    assignment -> variable ASSIGN expression SCOLON
+Rule 54    formal_parameters -> LPAREN formal_parameters_n RPAREN
+Rule 55    formal_parameters_n -> formal_parameter SCOLON formal_parameters_n
+Rule 56    formal_parameters_n -> formal_parameter
+Rule 57    formal_parameters_n -> <empty>
+Rule 58    formal_parameter -> function_parameter
+Rule 59    formal_parameter -> expression_parameter
+Rule 60    expression_parameter -> VAR identifier_list COLON identifier
+Rule 61    expression_parameter -> identifier_list COLON identifier
+Rule 62    function_parameter -> VOID identifier formal_parameters
+Rule 63    function_parameter -> identifier identifier formal_parameters
+Rule 64    identifier_list -> identifier COMMA identifier_list
+Rule 65    identifier_list -> identifier
+Rule 66    variable -> ID LBRACKET expression RBRACKET
+Rule 67    variable -> ID
+Rule 68    vartype -> identifier
+Rule 69    labels -> LABELS identifier_list SCOLON
+Rule 70    factor -> function_call
+Rule 71    factor -> integer
+Rule 72    factor -> variable
+Rule 73    factor -> NOT factor
+Rule 74    factor -> LPAREN expression RPAREN
+Rule 75    additive_operator -> OR
+Rule 76    additive_operator -> MINUS  [precedence=left, level=1]
+Rule 77    additive_operator -> PLUS  [precedence=left, level=1]
+Rule 78    multiplicative_operator -> AND
+Rule 79    multiplicative_operator -> DIVIDE  [precedence=left, level=2]
+Rule 80    multiplicative_operator -> TIMES  [precedence=left, level=2]
+Rule 81    relational_operator -> GREATER
+Rule 82    relational_operator -> GEQ
+Rule 83    relational_operator -> LEQ
+Rule 84    relational_operator -> LESS
+Rule 85    relational_operator -> NEQ
+Rule 86    relational_operator -> EQUAL
+Rule 87    mulop_term -> multiplicative_operator factor mulop_term
+Rule 88    mulop_term -> <empty>
+Rule 89    term -> factor mulop_term
+Rule 90    function_call_statement -> function_call
+Rule 91    function_call -> identifier LPAREN expression_list RPAREN
+Rule 92    expression_list -> <empty>
+Rule 93    expression_list -> expression expression_list_n
+Rule 94    expression_list_n -> <empty>
+Rule 95    expression_list_n -> COMMA expression_list
+Rule 96    expression -> simple_expression
+Rule 97    expression -> simple_expression relational_operator simple_expression
+Rule 98    simple_expression_n -> additive_operator term simple_expression_n
+Rule 99    simple_expression_n -> <empty>
+Rule 100   simple_expression -> term simple_expression_n
+Rule 101   simple_expression -> MINUS term simple_expression_n  [precedence=left, level=1]
+Rule 102   simple_expression -> PLUS term simple_expression_n  [precedence=left, level=1]
+Rule 103   identifier -> WRITE
+Rule 104   identifier -> READ
+Rule 105   identifier -> FALSE
+Rule 106   identifier -> TRUE
+Rule 107   identifier -> BOOLEAN
+Rule 108   identifier -> INTEGER
+Rule 109   identifier -> ID
+Rule 110   integer -> NUMBER
+
+Terminals, with rules where they appear:
+
+AND                  : 78
+ASSIGN               : 27 28 53
+BOOLEAN              : 107
+COLON                : 24 25 34 35 60 61
+COMMA                : 64 95
+DIVIDE               : 79
+ELSE                 : 50
+EQUAL                : 86
+FALSE                : 105
+FUNCTIONS            : 29
+GEQ                  : 82
+GOTO                 : 45
+GREATER              : 81
+ID                   : 66 67 109
+IF                   : 49 50
+INTEGER              : 108
+LABELS               : 69
+LBRACE               : 20 52
+LBRACKET             : 66
+LEQ                  : 83
+LESS                 : 84
+LPAREN               : 49 50 54 74 91
+MINUS                : 76 101
+NEQ                  : 85
+NOT                  : 73
+NUMBER               : 110
+OR                   : 75
+PLUS                 : 77 102
+RBRACE               : 20 52
+RBRACKET             : 66
+READ                 : 104
+RETURN               : 46 47
+RPAREN               : 49 50 54 74 91
+SCOLON               : 24 25 27 28 45 46 47 48 53 55 69
+TIMES                : 80
+TRUE                 : 106
+TYPES                : 26
+VAR                  : 60
+VARS                 : 23
+VOID                 : 2 62
+WHILE                : 51
+WRITE                : 103
+error                : 
+
+Nonterminals, with rules where they appear:
+
+additive_operator    : 98
+assignment           : 42
+block                : 2 3
+body                 : 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19
+compound             : 32 34 49 50 50 51
+conditional          : 38
+empty_statement      : 36
+expression           : 47 49 50 51 53 66 74 93
+expression_list      : 91 95
+expression_list_n    : 93
+expression_parameter : 59
+factor               : 73 87 89
+formal_parameter     : 55 56
+formal_parameters    : 2 3 62 63
+formal_parameters_n  : 54 55
+function             : 1 30 31
+function_call        : 70 90
+function_call_statement : 41
+function_parameter   : 58
+functions            : 8 9 10 12 15 16 18 19
+functions_n          : 29 31
+goto                 : 40
+identifier           : 2 3 3 27 28 34 35 45 60 61 62 63 63 64 65 68 91
+identifier_list      : 24 25 60 61 64 69
+integer              : 71
+labels               : 6 12 13 14 16 17 18 19
+mulop_term           : 87 89
+multiplicative_operator : 87
+program              : 0
+relational_operator  : 97
+repetitive           : 37
+return_rule          : 39
+simple_expression    : 96 97 97
+simple_expression_n  : 98 100 101 102
+statement            : 22
+statements           : 20 22
+term                 : 98 100 101 102
+types                : 5 10 11 14 15 17 18 19
+types_n              : 26 28
+unlabeled_statement  : 33 35 43 44
+unlabeled_statements : 44 52
+variable             : 53 72
+variables            : 7 9 11 13 15 16 17 19
+variables_n          : 23 25
+vartype              : 24 25 27 28
+
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . function
+    (2) function -> . VOID identifier formal_parameters block
+    (3) function -> . identifier identifier formal_parameters block
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    VOID            shift and go to state 3
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+    ID              shift and go to state 11
+
+    program                        shift and go to state 1
+    function                       shift and go to state 2
+    identifier                     shift and go to state 4
+
+state 1
+
+    (0) S' -> program .
+
+
+state 2
+
+    (1) program -> function .
+    $end            reduce using rule 1 (program -> function .)
+
+
+state 3
+
+    (2) function -> VOID . identifier formal_parameters block
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+    ID              shift and go to state 11
+
+    identifier                     shift and go to state 12
+
+state 4
+
+    (3) function -> identifier . identifier formal_parameters block
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+    ID              shift and go to state 11
+
+    identifier                     shift and go to state 13
+
+state 5
+
+    (103) identifier -> WRITE .
+    WRITE           reduce using rule 103 (identifier -> WRITE .)
+    READ            reduce using rule 103 (identifier -> WRITE .)
+    FALSE           reduce using rule 103 (identifier -> WRITE .)
+    TRUE            reduce using rule 103 (identifier -> WRITE .)
+    BOOLEAN         reduce using rule 103 (identifier -> WRITE .)
+    INTEGER         reduce using rule 103 (identifier -> WRITE .)
+    ID              reduce using rule 103 (identifier -> WRITE .)
+    LPAREN          reduce using rule 103 (identifier -> WRITE .)
+    COMMA           reduce using rule 103 (identifier -> WRITE .)
+    COLON           reduce using rule 103 (identifier -> WRITE .)
+    ASSIGN          reduce using rule 103 (identifier -> WRITE .)
+    SCOLON          reduce using rule 103 (identifier -> WRITE .)
+    RPAREN          reduce using rule 103 (identifier -> WRITE .)
+
+
+state 6
+
+    (104) identifier -> READ .
+    WRITE           reduce using rule 104 (identifier -> READ .)
+    READ            reduce using rule 104 (identifier -> READ .)
+    FALSE           reduce using rule 104 (identifier -> READ .)
+    TRUE            reduce using rule 104 (identifier -> READ .)
+    BOOLEAN         reduce using rule 104 (identifier -> READ .)
+    INTEGER         reduce using rule 104 (identifier -> READ .)
+    ID              reduce using rule 104 (identifier -> READ .)
+    LPAREN          reduce using rule 104 (identifier -> READ .)
+    COMMA           reduce using rule 104 (identifier -> READ .)
+    COLON           reduce using rule 104 (identifier -> READ .)
+    ASSIGN          reduce using rule 104 (identifier -> READ .)
+    SCOLON          reduce using rule 104 (identifier -> READ .)
+    RPAREN          reduce using rule 104 (identifier -> READ .)
+
+
+state 7
+
+    (105) identifier -> FALSE .
+    WRITE           reduce using rule 105 (identifier -> FALSE .)
+    READ            reduce using rule 105 (identifier -> FALSE .)
+    FALSE           reduce using rule 105 (identifier -> FALSE .)
+    TRUE            reduce using rule 105 (identifier -> FALSE .)
+    BOOLEAN         reduce using rule 105 (identifier -> FALSE .)
+    INTEGER         reduce using rule 105 (identifier -> FALSE .)
+    ID              reduce using rule 105 (identifier -> FALSE .)
+    LPAREN          reduce using rule 105 (identifier -> FALSE .)
+    COMMA           reduce using rule 105 (identifier -> FALSE .)
+    COLON           reduce using rule 105 (identifier -> FALSE .)
+    ASSIGN          reduce using rule 105 (identifier -> FALSE .)
+    SCOLON          reduce using rule 105 (identifier -> FALSE .)
+    RPAREN          reduce using rule 105 (identifier -> FALSE .)
+
+
+state 8
+
+    (106) identifier -> TRUE .
+    WRITE           reduce using rule 106 (identifier -> TRUE .)
+    READ            reduce using rule 106 (identifier -> TRUE .)
+    FALSE           reduce using rule 106 (identifier -> TRUE .)
+    TRUE            reduce using rule 106 (identifier -> TRUE .)
+    BOOLEAN         reduce using rule 106 (identifier -> TRUE .)
+    INTEGER         reduce using rule 106 (identifier -> TRUE .)
+    ID              reduce using rule 106 (identifier -> TRUE .)
+    LPAREN          reduce using rule 106 (identifier -> TRUE .)
+    COMMA           reduce using rule 106 (identifier -> TRUE .)
+    COLON           reduce using rule 106 (identifier -> TRUE .)
+    ASSIGN          reduce using rule 106 (identifier -> TRUE .)
+    SCOLON          reduce using rule 106 (identifier -> TRUE .)
+    RPAREN          reduce using rule 106 (identifier -> TRUE .)
+
+
+state 9
+
+    (107) identifier -> BOOLEAN .
+    WRITE           reduce using rule 107 (identifier -> BOOLEAN .)
+    READ            reduce using rule 107 (identifier -> BOOLEAN .)
+    FALSE           reduce using rule 107 (identifier -> BOOLEAN .)
+    TRUE            reduce using rule 107 (identifier -> BOOLEAN .)
+    BOOLEAN         reduce using rule 107 (identifier -> BOOLEAN .)
+    INTEGER         reduce using rule 107 (identifier -> BOOLEAN .)
+    ID              reduce using rule 107 (identifier -> BOOLEAN .)
+    LPAREN          reduce using rule 107 (identifier -> BOOLEAN .)
+    COMMA           reduce using rule 107 (identifier -> BOOLEAN .)
+    COLON           reduce using rule 107 (identifier -> BOOLEAN .)
+    ASSIGN          reduce using rule 107 (identifier -> BOOLEAN .)
+    SCOLON          reduce using rule 107 (identifier -> BOOLEAN .)
+    RPAREN          reduce using rule 107 (identifier -> BOOLEAN .)
+
+
+state 10
+
+    (108) identifier -> INTEGER .
+    WRITE           reduce using rule 108 (identifier -> INTEGER .)
+    READ            reduce using rule 108 (identifier -> INTEGER .)
+    FALSE           reduce using rule 108 (identifier -> INTEGER .)
+    TRUE            reduce using rule 108 (identifier -> INTEGER .)
+    BOOLEAN         reduce using rule 108 (identifier -> INTEGER .)
+    INTEGER         reduce using rule 108 (identifier -> INTEGER .)
+    ID              reduce using rule 108 (identifier -> INTEGER .)
+    LPAREN          reduce using rule 108 (identifier -> INTEGER .)
+    COMMA           reduce using rule 108 (identifier -> INTEGER .)
+    COLON           reduce using rule 108 (identifier -> INTEGER .)
+    ASSIGN          reduce using rule 108 (identifier -> INTEGER .)
+    SCOLON          reduce using rule 108 (identifier -> INTEGER .)
+    RPAREN          reduce using rule 108 (identifier -> INTEGER .)
+
+
+state 11
+
+    (109) identifier -> ID .
+    WRITE           reduce using rule 109 (identifier -> ID .)
+    READ            reduce using rule 109 (identifier -> ID .)
+    FALSE           reduce using rule 109 (identifier -> ID .)
+    TRUE            reduce using rule 109 (identifier -> ID .)
+    BOOLEAN         reduce using rule 109 (identifier -> ID .)
+    INTEGER         reduce using rule 109 (identifier -> ID .)
+    ID              reduce using rule 109 (identifier -> ID .)
+    LPAREN          reduce using rule 109 (identifier -> ID .)
+    COMMA           reduce using rule 109 (identifier -> ID .)
+    COLON           reduce using rule 109 (identifier -> ID .)
+    ASSIGN          reduce using rule 109 (identifier -> ID .)
+    SCOLON          reduce using rule 109 (identifier -> ID .)
+    RPAREN          reduce using rule 109 (identifier -> ID .)
+
+
+state 12
+
+    (2) function -> VOID identifier . formal_parameters block
+    (54) formal_parameters -> . LPAREN formal_parameters_n RPAREN
+    LPAREN          shift and go to state 15
+
+    formal_parameters              shift and go to state 14
+
+state 13
+
+    (3) function -> identifier identifier . formal_parameters block
+    (54) formal_parameters -> . LPAREN formal_parameters_n RPAREN
+    LPAREN          shift and go to state 15
+
+    formal_parameters              shift and go to state 16
+
+state 14
+
+    (2) function -> VOID identifier formal_parameters . block
+    (4) block -> . body
+    (5) block -> . types body
+    (6) block -> . labels body
+    (7) block -> . variables body
+    (8) block -> . functions body
+    (9) block -> . variables functions body
+    (10) block -> . types functions body
+    (11) block -> . types variables body
+    (12) block -> . labels functions body
+    (13) block -> . labels variables body
+    (14) block -> . labels types body
+    (15) block -> . types variables functions body
+    (16) block -> . labels variables functions body
+    (17) block -> . labels types variables body
+    (18) block -> . labels types functions body
+    (19) block -> . labels types variables functions body
+    (20) body -> . LBRACE statements RBRACE
+    (26) types -> . TYPES types_n
+    (69) labels -> . LABELS identifier_list SCOLON
+    (23) variables -> . VARS variables_n
+    (29) functions -> . FUNCTIONS functions_n
+    LBRACE          shift and go to state 23
+    TYPES           shift and go to state 24
+    LABELS          shift and go to state 25
+    VARS            shift and go to state 26
+    FUNCTIONS       shift and go to state 27
+
+    block                          shift and go to state 17
+    body                           shift and go to state 18
+    types                          shift and go to state 19
+    labels                         shift and go to state 20
+    variables                      shift and go to state 21
+    functions                      shift and go to state 22
+
+state 15
+
+    (54) formal_parameters -> LPAREN . formal_parameters_n RPAREN
+    (55) formal_parameters_n -> . formal_parameter SCOLON formal_parameters_n
+    (56) formal_parameters_n -> . formal_parameter
+    (57) formal_parameters_n -> .
+    (58) formal_parameter -> . function_parameter
+    (59) formal_parameter -> . expression_parameter
+    (62) function_parameter -> . VOID identifier formal_parameters
+    (63) function_parameter -> . identifier identifier formal_parameters
+    (60) expression_parameter -> . VAR identifier_list COLON identifier
+    (61) expression_parameter -> . identifier_list COLON identifier
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    (64) identifier_list -> . identifier COMMA identifier_list
+    (65) identifier_list -> . identifier
+    RPAREN          reduce using rule 57 (formal_parameters_n -> .)
+    VOID            shift and go to state 32
+    VAR             shift and go to state 34
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+    ID              shift and go to state 11
+
+    formal_parameters_n            shift and go to state 28
+    formal_parameter               shift and go to state 29
+    function_parameter             shift and go to state 30
+    expression_parameter           shift and go to state 31
+    identifier                     shift and go to state 33
+    identifier_list                shift and go to state 35
+
+state 16
+
+    (3) function -> identifier identifier formal_parameters . block
+    (4) block -> . body
+    (5) block -> . types body
+    (6) block -> . labels body
+    (7) block -> . variables body
+    (8) block -> . functions body
+    (9) block -> . variables functions body
+    (10) block -> . types functions body
+    (11) block -> . types variables body
+    (12) block -> . labels functions body
+    (13) block -> . labels variables body
+    (14) block -> . labels types body
+    (15) block -> . types variables functions body
+    (16) block -> . labels variables functions body
+    (17) block -> . labels types variables body
+    (18) block -> . labels types functions body
+    (19) block -> . labels types variables functions body
+    (20) body -> . LBRACE statements RBRACE
+    (26) types -> . TYPES types_n
+    (69) labels -> . LABELS identifier_list SCOLON
+    (23) variables -> . VARS variables_n
+    (29) functions -> . FUNCTIONS functions_n
+    LBRACE          shift and go to state 23
+    TYPES           shift and go to state 24
+    LABELS          shift and go to state 25
+    VARS            shift and go to state 26
+    FUNCTIONS       shift and go to state 27
+
+    block                          shift and go to state 36
+    body                           shift and go to state 18
+    types                          shift and go to state 19
+    labels                         shift and go to state 20
+    variables                      shift and go to state 21
+    functions                      shift and go to state 22
+
+state 17
+
+    (2) function -> VOID identifier formal_parameters block .
+    $end            reduce using rule 2 (function -> VOID identifier formal_parameters block .)
+    VOID            reduce using rule 2 (function -> VOID identifier formal_parameters block .)
+    WRITE           reduce using rule 2 (function -> VOID identifier formal_parameters block .)
+    READ            reduce using rule 2 (function -> VOID identifier formal_parameters block .)
+    FALSE           reduce using rule 2 (function -> VOID identifier formal_parameters block .)
+    TRUE            reduce using rule 2 (function -> VOID identifier formal_parameters block .)
+    BOOLEAN         reduce using rule 2 (function -> VOID identifier formal_parameters block .)
+    INTEGER         reduce using rule 2 (function -> VOID identifier formal_parameters block .)
+    ID              reduce using rule 2 (function -> VOID identifier formal_parameters block .)
+    LBRACE          reduce using rule 2 (function -> VOID identifier formal_parameters block .)
+
+
+state 18
+
+    (4) block -> body .
+    $end            reduce using rule 4 (block -> body .)
+    VOID            reduce using rule 4 (block -> body .)
+    WRITE           reduce using rule 4 (block -> body .)
+    READ            reduce using rule 4 (block -> body .)
+    FALSE           reduce using rule 4 (block -> body .)
+    TRUE            reduce using rule 4 (block -> body .)
+    BOOLEAN         reduce using rule 4 (block -> body .)
+    INTEGER         reduce using rule 4 (block -> body .)
+    ID              reduce using rule 4 (block -> body .)
+    LBRACE          reduce using rule 4 (block -> body .)
+
+
+state 19
+
+    (5) block -> types . body
+    (10) block -> types . functions body
+    (11) block -> types . variables body
+    (15) block -> types . variables functions body
+    (20) body -> . LBRACE statements RBRACE
+    (29) functions -> . FUNCTIONS functions_n
+    (23) variables -> . VARS variables_n
+    LBRACE          shift and go to state 23
+    FUNCTIONS       shift and go to state 27
+    VARS            shift and go to state 26
+
+    body                           shift and go to state 37
+    functions                      shift and go to state 38
+    variables                      shift and go to state 39
+
+state 20
+
+    (6) block -> labels . body
+    (12) block -> labels . functions body
+    (13) block -> labels . variables body
+    (14) block -> labels . types body
+    (16) block -> labels . variables functions body
+    (17) block -> labels . types variables body
+    (18) block -> labels . types functions body
+    (19) block -> labels . types variables functions body
+    (20) body -> . LBRACE statements RBRACE
+    (29) functions -> . FUNCTIONS functions_n
+    (23) variables -> . VARS variables_n
+    (26) types -> . TYPES types_n
+    LBRACE          shift and go to state 23
+    FUNCTIONS       shift and go to state 27
+    VARS            shift and go to state 26
+    TYPES           shift and go to state 24
+
+    body                           shift and go to state 40
+    functions                      shift and go to state 41
+    variables                      shift and go to state 42
+    types                          shift and go to state 43
+
+state 21
+
+    (7) block -> variables . body
+    (9) block -> variables . functions body
+    (20) body -> . LBRACE statements RBRACE
+    (29) functions -> . FUNCTIONS functions_n
+    LBRACE          shift and go to state 23
+    FUNCTIONS       shift and go to state 27
+
+    body                           shift and go to state 44
+    functions                      shift and go to state 45
+
+state 22
+
+    (8) block -> functions . body
+    (20) body -> . LBRACE statements RBRACE
+    LBRACE          shift and go to state 23
+
+    body                           shift and go to state 46
+
+state 23
+
+    (20) body -> LBRACE . statements RBRACE
+    (21) statements -> .
+    (22) statements -> . statement statements
+    (32) statement -> . compound
+    (33) statement -> . unlabeled_statement
+    (34) statement -> . identifier COLON compound
+    (35) statement -> . identifier COLON unlabeled_statement
+    (52) compound -> . LBRACE unlabeled_statements RBRACE
+    (36) unlabeled_statement -> . empty_statement
+    (37) unlabeled_statement -> . repetitive
+    (38) unlabeled_statement -> . conditional
+    (39) unlabeled_statement -> . return_rule
+    (40) unlabeled_statement -> . goto
+    (41) unlabeled_statement -> . function_call_statement
+    (42) unlabeled_statement -> . assignment
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    (48) empty_statement -> . SCOLON
+    (51) repetitive -> . WHILE expression compound
+    (49) conditional -> . IF LPAREN expression RPAREN compound
+    (50) conditional -> . IF LPAREN expression RPAREN compound ELSE compound
+    (46) return_rule -> . RETURN SCOLON
+    (47) return_rule -> . RETURN expression SCOLON
+    (45) goto -> . GOTO identifier SCOLON
+    (90) function_call_statement -> . function_call
+    (53) assignment -> . variable ASSIGN expression SCOLON
+    (91) function_call -> . identifier LPAREN expression_list RPAREN
+    (66) variable -> . ID LBRACKET expression RBRACKET
+    (67) variable -> . ID
+    RBRACE          reduce using rule 21 (statements -> .)
+    LBRACE          shift and go to state 47
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+    ID              shift and go to state 60
+    SCOLON          shift and go to state 61
+    WHILE           shift and go to state 62
+    IF              shift and go to state 63
+    RETURN          shift and go to state 64
+    GOTO            shift and go to state 65
+
+    statements                     shift and go to state 48
+    statement                      shift and go to state 49
+    compound                       shift and go to state 50
+    unlabeled_statement            shift and go to state 51
+    identifier                     shift and go to state 52
+    empty_statement                shift and go to state 53
+    repetitive                     shift and go to state 54
+    conditional                    shift and go to state 55
+    return_rule                    shift and go to state 56
+    goto                           shift and go to state 57
+    function_call_statement        shift and go to state 58
+    assignment                     shift and go to state 59
+    function_call                  shift and go to state 66
+    variable                       shift and go to state 67
+
+state 24
+
+    (26) types -> TYPES . types_n
+    (27) types_n -> . identifier ASSIGN vartype SCOLON
+    (28) types_n -> . identifier ASSIGN vartype SCOLON types_n
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+    ID              shift and go to state 11
+
+    types_n                        shift and go to state 68
+    identifier                     shift and go to state 69
+
+state 25
+
+    (69) labels -> LABELS . identifier_list SCOLON
+    (64) identifier_list -> . identifier COMMA identifier_list
+    (65) identifier_list -> . identifier
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+    ID              shift and go to state 11
+
+    identifier_list                shift and go to state 70
+    identifier                     shift and go to state 71
+
+state 26
+
+    (23) variables -> VARS . variables_n
+    (24) variables_n -> . identifier_list COLON vartype SCOLON
+    (25) variables_n -> . identifier_list COLON vartype SCOLON variables_n
+    (64) identifier_list -> . identifier COMMA identifier_list
+    (65) identifier_list -> . identifier
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+    ID              shift and go to state 11
+
+    variables_n                    shift and go to state 72
+    identifier_list                shift and go to state 73
+    identifier                     shift and go to state 71
+
+state 27
+
+    (29) functions -> FUNCTIONS . functions_n
+    (30) functions_n -> . function
+    (31) functions_n -> . function functions_n
+    (2) function -> . VOID identifier formal_parameters block
+    (3) function -> . identifier identifier formal_parameters block
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    VOID            shift and go to state 3
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+    ID              shift and go to state 11
+
+    functions_n                    shift and go to state 74
+    function                       shift and go to state 75
+    identifier                     shift and go to state 4
+
+state 28
+
+    (54) formal_parameters -> LPAREN formal_parameters_n . RPAREN
+    RPAREN          shift and go to state 76
+
+
+state 29
+
+    (55) formal_parameters_n -> formal_parameter . SCOLON formal_parameters_n
+    (56) formal_parameters_n -> formal_parameter .
+    SCOLON          shift and go to state 77
+    RPAREN          reduce using rule 56 (formal_parameters_n -> formal_parameter .)
+
+
+state 30
+
+    (58) formal_parameter -> function_parameter .
+    SCOLON          reduce using rule 58 (formal_parameter -> function_parameter .)
+    RPAREN          reduce using rule 58 (formal_parameter -> function_parameter .)
+
+
+state 31
+
+    (59) formal_parameter -> expression_parameter .
+    SCOLON          reduce using rule 59 (formal_parameter -> expression_parameter .)
+    RPAREN          reduce using rule 59 (formal_parameter -> expression_parameter .)
+
+
+state 32
+
+    (62) function_parameter -> VOID . identifier formal_parameters
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+    ID              shift and go to state 11
+
+    identifier                     shift and go to state 78
+
+state 33
+
+    (63) function_parameter -> identifier . identifier formal_parameters
+    (64) identifier_list -> identifier . COMMA identifier_list
+    (65) identifier_list -> identifier .
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    COMMA           shift and go to state 80
+    COLON           reduce using rule 65 (identifier_list -> identifier .)
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+    ID              shift and go to state 11
+
+    identifier                     shift and go to state 79
+
+state 34
+
+    (60) expression_parameter -> VAR . identifier_list COLON identifier
+    (64) identifier_list -> . identifier COMMA identifier_list
+    (65) identifier_list -> . identifier
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+    ID              shift and go to state 11
+
+    identifier_list                shift and go to state 81
+    identifier                     shift and go to state 71
+
+state 35
+
+    (61) expression_parameter -> identifier_list . COLON identifier
+    COLON           shift and go to state 82
+
+
+state 36
+
+    (3) function -> identifier identifier formal_parameters block .
+    $end            reduce using rule 3 (function -> identifier identifier formal_parameters block .)
+    VOID            reduce using rule 3 (function -> identifier identifier formal_parameters block .)
+    WRITE           reduce using rule 3 (function -> identifier identifier formal_parameters block .)
+    READ            reduce using rule 3 (function -> identifier identifier formal_parameters block .)
+    FALSE           reduce using rule 3 (function -> identifier identifier formal_parameters block .)
+    TRUE            reduce using rule 3 (function -> identifier identifier formal_parameters block .)
+    BOOLEAN         reduce using rule 3 (function -> identifier identifier formal_parameters block .)
+    INTEGER         reduce using rule 3 (function -> identifier identifier formal_parameters block .)
+    ID              reduce using rule 3 (function -> identifier identifier formal_parameters block .)
+    LBRACE          reduce using rule 3 (function -> identifier identifier formal_parameters block .)
+
+
+state 37
+
+    (5) block -> types body .
+    $end            reduce using rule 5 (block -> types body .)
+    VOID            reduce using rule 5 (block -> types body .)
+    WRITE           reduce using rule 5 (block -> types body .)
+    READ            reduce using rule 5 (block -> types body .)
+    FALSE           reduce using rule 5 (block -> types body .)
+    TRUE            reduce using rule 5 (block -> types body .)
+    BOOLEAN         reduce using rule 5 (block -> types body .)
+    INTEGER         reduce using rule 5 (block -> types body .)
+    ID              reduce using rule 5 (block -> types body .)
+    LBRACE          reduce using rule 5 (block -> types body .)
+
+
+state 38
+
+    (10) block -> types functions . body
+    (20) body -> . LBRACE statements RBRACE
+    LBRACE          shift and go to state 23
+
+    body                           shift and go to state 83
+
+state 39
+
+    (11) block -> types variables . body
+    (15) block -> types variables . functions body
+    (20) body -> . LBRACE statements RBRACE
+    (29) functions -> . FUNCTIONS functions_n
+    LBRACE          shift and go to state 23
+    FUNCTIONS       shift and go to state 27
+
+    body                           shift and go to state 84
+    functions                      shift and go to state 85
+
+state 40
+
+    (6) block -> labels body .
+    $end            reduce using rule 6 (block -> labels body .)
+    VOID            reduce using rule 6 (block -> labels body .)
+    WRITE           reduce using rule 6 (block -> labels body .)
+    READ            reduce using rule 6 (block -> labels body .)
+    FALSE           reduce using rule 6 (block -> labels body .)
+    TRUE            reduce using rule 6 (block -> labels body .)
+    BOOLEAN         reduce using rule 6 (block -> labels body .)
+    INTEGER         reduce using rule 6 (block -> labels body .)
+    ID              reduce using rule 6 (block -> labels body .)
+    LBRACE          reduce using rule 6 (block -> labels body .)
+
+
+state 41
+
+    (12) block -> labels functions . body
+    (20) body -> . LBRACE statements RBRACE
+    LBRACE          shift and go to state 23
+
+    body                           shift and go to state 86
+
+state 42
+
+    (13) block -> labels variables . body
+    (16) block -> labels variables . functions body
+    (20) body -> . LBRACE statements RBRACE
+    (29) functions -> . FUNCTIONS functions_n
+    LBRACE          shift and go to state 23
+    FUNCTIONS       shift and go to state 27
+
+    body                           shift and go to state 87
+    functions                      shift and go to state 88
+
+state 43
+
+    (14) block -> labels types . body
+    (17) block -> labels types . variables body
+    (18) block -> labels types . functions body
+    (19) block -> labels types . variables functions body
+    (20) body -> . LBRACE statements RBRACE
+    (23) variables -> . VARS variables_n
+    (29) functions -> . FUNCTIONS functions_n
+    LBRACE          shift and go to state 23
+    VARS            shift and go to state 26
+    FUNCTIONS       shift and go to state 27
+
+    body                           shift and go to state 89
+    variables                      shift and go to state 90
+    functions                      shift and go to state 91
+
+state 44
+
+    (7) block -> variables body .
+    $end            reduce using rule 7 (block -> variables body .)
+    VOID            reduce using rule 7 (block -> variables body .)
+    WRITE           reduce using rule 7 (block -> variables body .)
+    READ            reduce using rule 7 (block -> variables body .)
+    FALSE           reduce using rule 7 (block -> variables body .)
+    TRUE            reduce using rule 7 (block -> variables body .)
+    BOOLEAN         reduce using rule 7 (block -> variables body .)
+    INTEGER         reduce using rule 7 (block -> variables body .)
+    ID              reduce using rule 7 (block -> variables body .)
+    LBRACE          reduce using rule 7 (block -> variables body .)
+
+
+state 45
+
+    (9) block -> variables functions . body
+    (20) body -> . LBRACE statements RBRACE
+    LBRACE          shift and go to state 23
+
+    body                           shift and go to state 92
+
+state 46
+
+    (8) block -> functions body .
+    $end            reduce using rule 8 (block -> functions body .)
+    VOID            reduce using rule 8 (block -> functions body .)
+    WRITE           reduce using rule 8 (block -> functions body .)
+    READ            reduce using rule 8 (block -> functions body .)
+    FALSE           reduce using rule 8 (block -> functions body .)
+    TRUE            reduce using rule 8 (block -> functions body .)
+    BOOLEAN         reduce using rule 8 (block -> functions body .)
+    INTEGER         reduce using rule 8 (block -> functions body .)
+    ID              reduce using rule 8 (block -> functions body .)
+    LBRACE          reduce using rule 8 (block -> functions body .)
+
+
+state 47
+
+    (52) compound -> LBRACE . unlabeled_statements RBRACE
+    (43) unlabeled_statements -> . unlabeled_statement
+    (44) unlabeled_statements -> . unlabeled_statement unlabeled_statements
+    (36) unlabeled_statement -> . empty_statement
+    (37) unlabeled_statement -> . repetitive
+    (38) unlabeled_statement -> . conditional
+    (39) unlabeled_statement -> . return_rule
+    (40) unlabeled_statement -> . goto
+    (41) unlabeled_statement -> . function_call_statement
+    (42) unlabeled_statement -> . assignment
+    (48) empty_statement -> . SCOLON
+    (51) repetitive -> . WHILE expression compound
+    (49) conditional -> . IF LPAREN expression RPAREN compound
+    (50) conditional -> . IF LPAREN expression RPAREN compound ELSE compound
+    (46) return_rule -> . RETURN SCOLON
+    (47) return_rule -> . RETURN expression SCOLON
+    (45) goto -> . GOTO identifier SCOLON
+    (90) function_call_statement -> . function_call
+    (53) assignment -> . variable ASSIGN expression SCOLON
+    (91) function_call -> . identifier LPAREN expression_list RPAREN
+    (66) variable -> . ID LBRACKET expression RBRACKET
+    (67) variable -> . ID
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    SCOLON          shift and go to state 61
+    WHILE           shift and go to state 62
+    IF              shift and go to state 63
+    RETURN          shift and go to state 64
+    GOTO            shift and go to state 65
+    ID              shift and go to state 96
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+
+    unlabeled_statements           shift and go to state 93
+    unlabeled_statement            shift and go to state 94
+    empty_statement                shift and go to state 53
+    repetitive                     shift and go to state 54
+    conditional                    shift and go to state 55
+    return_rule                    shift and go to state 56
+    goto                           shift and go to state 57
+    function_call_statement        shift and go to state 58
+    assignment                     shift and go to state 59
+    identifier                     shift and go to state 95
+    function_call                  shift and go to state 66
+    variable                       shift and go to state 67
+
+state 48
+
+    (20) body -> LBRACE statements . RBRACE
+    RBRACE          shift and go to state 97
+
+
+state 49
+
+    (22) statements -> statement . statements
+    (21) statements -> .
+    (22) statements -> . statement statements
+    (32) statement -> . compound
+    (33) statement -> . unlabeled_statement
+    (34) statement -> . identifier COLON compound
+    (35) statement -> . identifier COLON unlabeled_statement
+    (52) compound -> . LBRACE unlabeled_statements RBRACE
+    (36) unlabeled_statement -> . empty_statement
+    (37) unlabeled_statement -> . repetitive
+    (38) unlabeled_statement -> . conditional
+    (39) unlabeled_statement -> . return_rule
+    (40) unlabeled_statement -> . goto
+    (41) unlabeled_statement -> . function_call_statement
+    (42) unlabeled_statement -> . assignment
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    (48) empty_statement -> . SCOLON
+    (51) repetitive -> . WHILE expression compound
+    (49) conditional -> . IF LPAREN expression RPAREN compound
+    (50) conditional -> . IF LPAREN expression RPAREN compound ELSE compound
+    (46) return_rule -> . RETURN SCOLON
+    (47) return_rule -> . RETURN expression SCOLON
+    (45) goto -> . GOTO identifier SCOLON
+    (90) function_call_statement -> . function_call
+    (53) assignment -> . variable ASSIGN expression SCOLON
+    (91) function_call -> . identifier LPAREN expression_list RPAREN
+    (66) variable -> . ID LBRACKET expression RBRACKET
+    (67) variable -> . ID
+    RBRACE          reduce using rule 21 (statements -> .)
+    LBRACE          shift and go to state 47
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+    ID              shift and go to state 60
+    SCOLON          shift and go to state 61
+    WHILE           shift and go to state 62
+    IF              shift and go to state 63
+    RETURN          shift and go to state 64
+    GOTO            shift and go to state 65
+
+    statement                      shift and go to state 49
+    statements                     shift and go to state 98
+    compound                       shift and go to state 50
+    unlabeled_statement            shift and go to state 51
+    identifier                     shift and go to state 52
+    empty_statement                shift and go to state 53
+    repetitive                     shift and go to state 54
+    conditional                    shift and go to state 55
+    return_rule                    shift and go to state 56
+    goto                           shift and go to state 57
+    function_call_statement        shift and go to state 58
+    assignment                     shift and go to state 59
+    function_call                  shift and go to state 66
+    variable                       shift and go to state 67
+
+state 50
+
+    (32) statement -> compound .
+    LBRACE          reduce using rule 32 (statement -> compound .)
+    WRITE           reduce using rule 32 (statement -> compound .)
+    READ            reduce using rule 32 (statement -> compound .)
+    FALSE           reduce using rule 32 (statement -> compound .)
+    TRUE            reduce using rule 32 (statement -> compound .)
+    BOOLEAN         reduce using rule 32 (statement -> compound .)
+    INTEGER         reduce using rule 32 (statement -> compound .)
+    ID              reduce using rule 32 (statement -> compound .)
+    SCOLON          reduce using rule 32 (statement -> compound .)
+    WHILE           reduce using rule 32 (statement -> compound .)
+    IF              reduce using rule 32 (statement -> compound .)
+    RETURN          reduce using rule 32 (statement -> compound .)
+    GOTO            reduce using rule 32 (statement -> compound .)
+    RBRACE          reduce using rule 32 (statement -> compound .)
+
+
+state 51
+
+    (33) statement -> unlabeled_statement .
+    LBRACE          reduce using rule 33 (statement -> unlabeled_statement .)
+    WRITE           reduce using rule 33 (statement -> unlabeled_statement .)
+    READ            reduce using rule 33 (statement -> unlabeled_statement .)
+    FALSE           reduce using rule 33 (statement -> unlabeled_statement .)
+    TRUE            reduce using rule 33 (statement -> unlabeled_statement .)
+    BOOLEAN         reduce using rule 33 (statement -> unlabeled_statement .)
+    INTEGER         reduce using rule 33 (statement -> unlabeled_statement .)
+    ID              reduce using rule 33 (statement -> unlabeled_statement .)
+    SCOLON          reduce using rule 33 (statement -> unlabeled_statement .)
+    WHILE           reduce using rule 33 (statement -> unlabeled_statement .)
+    IF              reduce using rule 33 (statement -> unlabeled_statement .)
+    RETURN          reduce using rule 33 (statement -> unlabeled_statement .)
+    GOTO            reduce using rule 33 (statement -> unlabeled_statement .)
+    RBRACE          reduce using rule 33 (statement -> unlabeled_statement .)
+
+
+state 52
+
+    (34) statement -> identifier . COLON compound
+    (35) statement -> identifier . COLON unlabeled_statement
+    (91) function_call -> identifier . LPAREN expression_list RPAREN
+    COLON           shift and go to state 99
+    LPAREN          shift and go to state 100
+
+
+state 53
+
+    (36) unlabeled_statement -> empty_statement .
+    LBRACE          reduce using rule 36 (unlabeled_statement -> empty_statement .)
+    WRITE           reduce using rule 36 (unlabeled_statement -> empty_statement .)
+    READ            reduce using rule 36 (unlabeled_statement -> empty_statement .)
+    FALSE           reduce using rule 36 (unlabeled_statement -> empty_statement .)
+    TRUE            reduce using rule 36 (unlabeled_statement -> empty_statement .)
+    BOOLEAN         reduce using rule 36 (unlabeled_statement -> empty_statement .)
+    INTEGER         reduce using rule 36 (unlabeled_statement -> empty_statement .)
+    ID              reduce using rule 36 (unlabeled_statement -> empty_statement .)
+    SCOLON          reduce using rule 36 (unlabeled_statement -> empty_statement .)
+    WHILE           reduce using rule 36 (unlabeled_statement -> empty_statement .)
+    IF              reduce using rule 36 (unlabeled_statement -> empty_statement .)
+    RETURN          reduce using rule 36 (unlabeled_statement -> empty_statement .)
+    GOTO            reduce using rule 36 (unlabeled_statement -> empty_statement .)
+    RBRACE          reduce using rule 36 (unlabeled_statement -> empty_statement .)
+
+
+state 54
+
+    (37) unlabeled_statement -> repetitive .
+    LBRACE          reduce using rule 37 (unlabeled_statement -> repetitive .)
+    WRITE           reduce using rule 37 (unlabeled_statement -> repetitive .)
+    READ            reduce using rule 37 (unlabeled_statement -> repetitive .)
+    FALSE           reduce using rule 37 (unlabeled_statement -> repetitive .)
+    TRUE            reduce using rule 37 (unlabeled_statement -> repetitive .)
+    BOOLEAN         reduce using rule 37 (unlabeled_statement -> repetitive .)
+    INTEGER         reduce using rule 37 (unlabeled_statement -> repetitive .)
+    ID              reduce using rule 37 (unlabeled_statement -> repetitive .)
+    SCOLON          reduce using rule 37 (unlabeled_statement -> repetitive .)
+    WHILE           reduce using rule 37 (unlabeled_statement -> repetitive .)
+    IF              reduce using rule 37 (unlabeled_statement -> repetitive .)
+    RETURN          reduce using rule 37 (unlabeled_statement -> repetitive .)
+    GOTO            reduce using rule 37 (unlabeled_statement -> repetitive .)
+    RBRACE          reduce using rule 37 (unlabeled_statement -> repetitive .)
+
+
+state 55
+
+    (38) unlabeled_statement -> conditional .
+    LBRACE          reduce using rule 38 (unlabeled_statement -> conditional .)
+    WRITE           reduce using rule 38 (unlabeled_statement -> conditional .)
+    READ            reduce using rule 38 (unlabeled_statement -> conditional .)
+    FALSE           reduce using rule 38 (unlabeled_statement -> conditional .)
+    TRUE            reduce using rule 38 (unlabeled_statement -> conditional .)
+    BOOLEAN         reduce using rule 38 (unlabeled_statement -> conditional .)
+    INTEGER         reduce using rule 38 (unlabeled_statement -> conditional .)
+    ID              reduce using rule 38 (unlabeled_statement -> conditional .)
+    SCOLON          reduce using rule 38 (unlabeled_statement -> conditional .)
+    WHILE           reduce using rule 38 (unlabeled_statement -> conditional .)
+    IF              reduce using rule 38 (unlabeled_statement -> conditional .)
+    RETURN          reduce using rule 38 (unlabeled_statement -> conditional .)
+    GOTO            reduce using rule 38 (unlabeled_statement -> conditional .)
+    RBRACE          reduce using rule 38 (unlabeled_statement -> conditional .)
+
+
+state 56
+
+    (39) unlabeled_statement -> return_rule .
+    LBRACE          reduce using rule 39 (unlabeled_statement -> return_rule .)
+    WRITE           reduce using rule 39 (unlabeled_statement -> return_rule .)
+    READ            reduce using rule 39 (unlabeled_statement -> return_rule .)
+    FALSE           reduce using rule 39 (unlabeled_statement -> return_rule .)
+    TRUE            reduce using rule 39 (unlabeled_statement -> return_rule .)
+    BOOLEAN         reduce using rule 39 (unlabeled_statement -> return_rule .)
+    INTEGER         reduce using rule 39 (unlabeled_statement -> return_rule .)
+    ID              reduce using rule 39 (unlabeled_statement -> return_rule .)
+    SCOLON          reduce using rule 39 (unlabeled_statement -> return_rule .)
+    WHILE           reduce using rule 39 (unlabeled_statement -> return_rule .)
+    IF              reduce using rule 39 (unlabeled_statement -> return_rule .)
+    RETURN          reduce using rule 39 (unlabeled_statement -> return_rule .)
+    GOTO            reduce using rule 39 (unlabeled_statement -> return_rule .)
+    RBRACE          reduce using rule 39 (unlabeled_statement -> return_rule .)
+
+
+state 57
+
+    (40) unlabeled_statement -> goto .
+    LBRACE          reduce using rule 40 (unlabeled_statement -> goto .)
+    WRITE           reduce using rule 40 (unlabeled_statement -> goto .)
+    READ            reduce using rule 40 (unlabeled_statement -> goto .)
+    FALSE           reduce using rule 40 (unlabeled_statement -> goto .)
+    TRUE            reduce using rule 40 (unlabeled_statement -> goto .)
+    BOOLEAN         reduce using rule 40 (unlabeled_statement -> goto .)
+    INTEGER         reduce using rule 40 (unlabeled_statement -> goto .)
+    ID              reduce using rule 40 (unlabeled_statement -> goto .)
+    SCOLON          reduce using rule 40 (unlabeled_statement -> goto .)
+    WHILE           reduce using rule 40 (unlabeled_statement -> goto .)
+    IF              reduce using rule 40 (unlabeled_statement -> goto .)
+    RETURN          reduce using rule 40 (unlabeled_statement -> goto .)
+    GOTO            reduce using rule 40 (unlabeled_statement -> goto .)
+    RBRACE          reduce using rule 40 (unlabeled_statement -> goto .)
+
+
+state 58
+
+    (41) unlabeled_statement -> function_call_statement .
+    LBRACE          reduce using rule 41 (unlabeled_statement -> function_call_statement .)
+    WRITE           reduce using rule 41 (unlabeled_statement -> function_call_statement .)
+    READ            reduce using rule 41 (unlabeled_statement -> function_call_statement .)
+    FALSE           reduce using rule 41 (unlabeled_statement -> function_call_statement .)
+    TRUE            reduce using rule 41 (unlabeled_statement -> function_call_statement .)
+    BOOLEAN         reduce using rule 41 (unlabeled_statement -> function_call_statement .)
+    INTEGER         reduce using rule 41 (unlabeled_statement -> function_call_statement .)
+    ID              reduce using rule 41 (unlabeled_statement -> function_call_statement .)
+    SCOLON          reduce using rule 41 (unlabeled_statement -> function_call_statement .)
+    WHILE           reduce using rule 41 (unlabeled_statement -> function_call_statement .)
+    IF              reduce using rule 41 (unlabeled_statement -> function_call_statement .)
+    RETURN          reduce using rule 41 (unlabeled_statement -> function_call_statement .)
+    GOTO            reduce using rule 41 (unlabeled_statement -> function_call_statement .)
+    RBRACE          reduce using rule 41 (unlabeled_statement -> function_call_statement .)
+
+
+state 59
+
+    (42) unlabeled_statement -> assignment .
+    LBRACE          reduce using rule 42 (unlabeled_statement -> assignment .)
+    WRITE           reduce using rule 42 (unlabeled_statement -> assignment .)
+    READ            reduce using rule 42 (unlabeled_statement -> assignment .)
+    FALSE           reduce using rule 42 (unlabeled_statement -> assignment .)
+    TRUE            reduce using rule 42 (unlabeled_statement -> assignment .)
+    BOOLEAN         reduce using rule 42 (unlabeled_statement -> assignment .)
+    INTEGER         reduce using rule 42 (unlabeled_statement -> assignment .)
+    ID              reduce using rule 42 (unlabeled_statement -> assignment .)
+    SCOLON          reduce using rule 42 (unlabeled_statement -> assignment .)
+    WHILE           reduce using rule 42 (unlabeled_statement -> assignment .)
+    IF              reduce using rule 42 (unlabeled_statement -> assignment .)
+    RETURN          reduce using rule 42 (unlabeled_statement -> assignment .)
+    GOTO            reduce using rule 42 (unlabeled_statement -> assignment .)
+    RBRACE          reduce using rule 42 (unlabeled_statement -> assignment .)
+
+
+state 60
+
+    (109) identifier -> ID .
+    (66) variable -> ID . LBRACKET expression RBRACKET
+    (67) variable -> ID .
+    COLON           reduce using rule 109 (identifier -> ID .)
+    LPAREN          reduce using rule 109 (identifier -> ID .)
+    LBRACKET        shift and go to state 101
+    ASSIGN          reduce using rule 67 (variable -> ID .)
+
+
+state 61
+
+    (48) empty_statement -> SCOLON .
+    LBRACE          reduce using rule 48 (empty_statement -> SCOLON .)
+    WRITE           reduce using rule 48 (empty_statement -> SCOLON .)
+    READ            reduce using rule 48 (empty_statement -> SCOLON .)
+    FALSE           reduce using rule 48 (empty_statement -> SCOLON .)
+    TRUE            reduce using rule 48 (empty_statement -> SCOLON .)
+    BOOLEAN         reduce using rule 48 (empty_statement -> SCOLON .)
+    INTEGER         reduce using rule 48 (empty_statement -> SCOLON .)
+    ID              reduce using rule 48 (empty_statement -> SCOLON .)
+    SCOLON          reduce using rule 48 (empty_statement -> SCOLON .)
+    WHILE           reduce using rule 48 (empty_statement -> SCOLON .)
+    IF              reduce using rule 48 (empty_statement -> SCOLON .)
+    RETURN          reduce using rule 48 (empty_statement -> SCOLON .)
+    GOTO            reduce using rule 48 (empty_statement -> SCOLON .)
+    RBRACE          reduce using rule 48 (empty_statement -> SCOLON .)
+
+
+state 62
+
+    (51) repetitive -> WHILE . expression compound
+    (96) expression -> . simple_expression
+    (97) expression -> . simple_expression relational_operator simple_expression
+    (100) simple_expression -> . term simple_expression_n
+    (101) simple_expression -> . MINUS term simple_expression_n
+    (102) simple_expression -> . PLUS term simple_expression_n
+    (89) term -> . factor mulop_term
+    (70) factor -> . function_call
+    (71) factor -> . integer
+    (72) factor -> . variable
+    (73) factor -> . NOT factor
+    (74) factor -> . LPAREN expression RPAREN
+    (91) function_call -> . identifier LPAREN expression_list RPAREN
+    (110) integer -> . NUMBER
+    (66) variable -> . ID LBRACKET expression RBRACKET
+    (67) variable -> . ID
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    MINUS           shift and go to state 105
+    PLUS            shift and go to state 106
+    NOT             shift and go to state 111
+    LPAREN          shift and go to state 112
+    NUMBER          shift and go to state 113
+    ID              shift and go to state 96
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+
+    expression                     shift and go to state 102
+    simple_expression              shift and go to state 103
+    term                           shift and go to state 104
+    factor                         shift and go to state 107
+    function_call                  shift and go to state 108
+    integer                        shift and go to state 109
+    variable                       shift and go to state 110
+    identifier                     shift and go to state 95
+
+state 63
+
+    (49) conditional -> IF . LPAREN expression RPAREN compound
+    (50) conditional -> IF . LPAREN expression RPAREN compound ELSE compound
+    LPAREN          shift and go to state 114
+
+
+state 64
+
+    (46) return_rule -> RETURN . SCOLON
+    (47) return_rule -> RETURN . expression SCOLON
+    (96) expression -> . simple_expression
+    (97) expression -> . simple_expression relational_operator simple_expression
+    (100) simple_expression -> . term simple_expression_n
+    (101) simple_expression -> . MINUS term simple_expression_n
+    (102) simple_expression -> . PLUS term simple_expression_n
+    (89) term -> . factor mulop_term
+    (70) factor -> . function_call
+    (71) factor -> . integer
+    (72) factor -> . variable
+    (73) factor -> . NOT factor
+    (74) factor -> . LPAREN expression RPAREN
+    (91) function_call -> . identifier LPAREN expression_list RPAREN
+    (110) integer -> . NUMBER
+    (66) variable -> . ID LBRACKET expression RBRACKET
+    (67) variable -> . ID
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    SCOLON          shift and go to state 115
+    MINUS           shift and go to state 105
+    PLUS            shift and go to state 106
+    NOT             shift and go to state 111
+    LPAREN          shift and go to state 112
+    NUMBER          shift and go to state 113
+    ID              shift and go to state 96
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+
+    expression                     shift and go to state 116
+    simple_expression              shift and go to state 103
+    term                           shift and go to state 104
+    factor                         shift and go to state 107
+    function_call                  shift and go to state 108
+    integer                        shift and go to state 109
+    variable                       shift and go to state 110
+    identifier                     shift and go to state 95
+
+state 65
+
+    (45) goto -> GOTO . identifier SCOLON
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+    ID              shift and go to state 11
+
+    identifier                     shift and go to state 117
+
+state 66
+
+    (90) function_call_statement -> function_call .
+    LBRACE          reduce using rule 90 (function_call_statement -> function_call .)
+    WRITE           reduce using rule 90 (function_call_statement -> function_call .)
+    READ            reduce using rule 90 (function_call_statement -> function_call .)
+    FALSE           reduce using rule 90 (function_call_statement -> function_call .)
+    TRUE            reduce using rule 90 (function_call_statement -> function_call .)
+    BOOLEAN         reduce using rule 90 (function_call_statement -> function_call .)
+    INTEGER         reduce using rule 90 (function_call_statement -> function_call .)
+    ID              reduce using rule 90 (function_call_statement -> function_call .)
+    SCOLON          reduce using rule 90 (function_call_statement -> function_call .)
+    WHILE           reduce using rule 90 (function_call_statement -> function_call .)
+    IF              reduce using rule 90 (function_call_statement -> function_call .)
+    RETURN          reduce using rule 90 (function_call_statement -> function_call .)
+    GOTO            reduce using rule 90 (function_call_statement -> function_call .)
+    RBRACE          reduce using rule 90 (function_call_statement -> function_call .)
+
+
+state 67
+
+    (53) assignment -> variable . ASSIGN expression SCOLON
+    ASSIGN          shift and go to state 118
+
+
+state 68
+
+    (26) types -> TYPES types_n .
+    LBRACE          reduce using rule 26 (types -> TYPES types_n .)
+    FUNCTIONS       reduce using rule 26 (types -> TYPES types_n .)
+    VARS            reduce using rule 26 (types -> TYPES types_n .)
+
+
+state 69
+
+    (27) types_n -> identifier . ASSIGN vartype SCOLON
+    (28) types_n -> identifier . ASSIGN vartype SCOLON types_n
+    ASSIGN          shift and go to state 119
+
+
+state 70
+
+    (69) labels -> LABELS identifier_list . SCOLON
+    SCOLON          shift and go to state 120
+
+
+state 71
+
+    (64) identifier_list -> identifier . COMMA identifier_list
+    (65) identifier_list -> identifier .
+    COMMA           shift and go to state 80
+    SCOLON          reduce using rule 65 (identifier_list -> identifier .)
+    COLON           reduce using rule 65 (identifier_list -> identifier .)
+
+
+state 72
+
+    (23) variables -> VARS variables_n .
+    LBRACE          reduce using rule 23 (variables -> VARS variables_n .)
+    FUNCTIONS       reduce using rule 23 (variables -> VARS variables_n .)
+
+
+state 73
+
+    (24) variables_n -> identifier_list . COLON vartype SCOLON
+    (25) variables_n -> identifier_list . COLON vartype SCOLON variables_n
+    COLON           shift and go to state 121
+
+
+state 74
+
+    (29) functions -> FUNCTIONS functions_n .
+    LBRACE          reduce using rule 29 (functions -> FUNCTIONS functions_n .)
+
+
+state 75
+
+    (30) functions_n -> function .
+    (31) functions_n -> function . functions_n
+    (30) functions_n -> . function
+    (31) functions_n -> . function functions_n
+    (2) function -> . VOID identifier formal_parameters block
+    (3) function -> . identifier identifier formal_parameters block
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    LBRACE          reduce using rule 30 (functions_n -> function .)
+    VOID            shift and go to state 3
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+    ID              shift and go to state 11
+
+    function                       shift and go to state 75
+    functions_n                    shift and go to state 122
+    identifier                     shift and go to state 4
+
+state 76
+
+    (54) formal_parameters -> LPAREN formal_parameters_n RPAREN .
+    LBRACE          reduce using rule 54 (formal_parameters -> LPAREN formal_parameters_n RPAREN .)
+    TYPES           reduce using rule 54 (formal_parameters -> LPAREN formal_parameters_n RPAREN .)
+    LABELS          reduce using rule 54 (formal_parameters -> LPAREN formal_parameters_n RPAREN .)
+    VARS            reduce using rule 54 (formal_parameters -> LPAREN formal_parameters_n RPAREN .)
+    FUNCTIONS       reduce using rule 54 (formal_parameters -> LPAREN formal_parameters_n RPAREN .)
+    SCOLON          reduce using rule 54 (formal_parameters -> LPAREN formal_parameters_n RPAREN .)
+    RPAREN          reduce using rule 54 (formal_parameters -> LPAREN formal_parameters_n RPAREN .)
+
+
+state 77
+
+    (55) formal_parameters_n -> formal_parameter SCOLON . formal_parameters_n
+    (55) formal_parameters_n -> . formal_parameter SCOLON formal_parameters_n
+    (56) formal_parameters_n -> . formal_parameter
+    (57) formal_parameters_n -> .
+    (58) formal_parameter -> . function_parameter
+    (59) formal_parameter -> . expression_parameter
+    (62) function_parameter -> . VOID identifier formal_parameters
+    (63) function_parameter -> . identifier identifier formal_parameters
+    (60) expression_parameter -> . VAR identifier_list COLON identifier
+    (61) expression_parameter -> . identifier_list COLON identifier
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    (64) identifier_list -> . identifier COMMA identifier_list
+    (65) identifier_list -> . identifier
+    RPAREN          reduce using rule 57 (formal_parameters_n -> .)
+    VOID            shift and go to state 32
+    VAR             shift and go to state 34
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+    ID              shift and go to state 11
+
+    formal_parameter               shift and go to state 29
+    formal_parameters_n            shift and go to state 123
+    function_parameter             shift and go to state 30
+    expression_parameter           shift and go to state 31
+    identifier                     shift and go to state 33
+    identifier_list                shift and go to state 35
+
+state 78
+
+    (62) function_parameter -> VOID identifier . formal_parameters
+    (54) formal_parameters -> . LPAREN formal_parameters_n RPAREN
+    LPAREN          shift and go to state 15
+
+    formal_parameters              shift and go to state 124
+
+state 79
+
+    (63) function_parameter -> identifier identifier . formal_parameters
+    (54) formal_parameters -> . LPAREN formal_parameters_n RPAREN
+    LPAREN          shift and go to state 15
+
+    formal_parameters              shift and go to state 125
+
+state 80
+
+    (64) identifier_list -> identifier COMMA . identifier_list
+    (64) identifier_list -> . identifier COMMA identifier_list
+    (65) identifier_list -> . identifier
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+    ID              shift and go to state 11
+
+    identifier                     shift and go to state 71
+    identifier_list                shift and go to state 126
+
+state 81
+
+    (60) expression_parameter -> VAR identifier_list . COLON identifier
+    COLON           shift and go to state 127
+
+
+state 82
+
+    (61) expression_parameter -> identifier_list COLON . identifier
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+    ID              shift and go to state 11
+
+    identifier                     shift and go to state 128
+
+state 83
+
+    (10) block -> types functions body .
+    $end            reduce using rule 10 (block -> types functions body .)
+    VOID            reduce using rule 10 (block -> types functions body .)
+    WRITE           reduce using rule 10 (block -> types functions body .)
+    READ            reduce using rule 10 (block -> types functions body .)
+    FALSE           reduce using rule 10 (block -> types functions body .)
+    TRUE            reduce using rule 10 (block -> types functions body .)
+    BOOLEAN         reduce using rule 10 (block -> types functions body .)
+    INTEGER         reduce using rule 10 (block -> types functions body .)
+    ID              reduce using rule 10 (block -> types functions body .)
+    LBRACE          reduce using rule 10 (block -> types functions body .)
+
+
+state 84
+
+    (11) block -> types variables body .
+    $end            reduce using rule 11 (block -> types variables body .)
+    VOID            reduce using rule 11 (block -> types variables body .)
+    WRITE           reduce using rule 11 (block -> types variables body .)
+    READ            reduce using rule 11 (block -> types variables body .)
+    FALSE           reduce using rule 11 (block -> types variables body .)
+    TRUE            reduce using rule 11 (block -> types variables body .)
+    BOOLEAN         reduce using rule 11 (block -> types variables body .)
+    INTEGER         reduce using rule 11 (block -> types variables body .)
+    ID              reduce using rule 11 (block -> types variables body .)
+    LBRACE          reduce using rule 11 (block -> types variables body .)
+
+
+state 85
+
+    (15) block -> types variables functions . body
+    (20) body -> . LBRACE statements RBRACE
+    LBRACE          shift and go to state 23
+
+    body                           shift and go to state 129
+
+state 86
+
+    (12) block -> labels functions body .
+    $end            reduce using rule 12 (block -> labels functions body .)
+    VOID            reduce using rule 12 (block -> labels functions body .)
+    WRITE           reduce using rule 12 (block -> labels functions body .)
+    READ            reduce using rule 12 (block -> labels functions body .)
+    FALSE           reduce using rule 12 (block -> labels functions body .)
+    TRUE            reduce using rule 12 (block -> labels functions body .)
+    BOOLEAN         reduce using rule 12 (block -> labels functions body .)
+    INTEGER         reduce using rule 12 (block -> labels functions body .)
+    ID              reduce using rule 12 (block -> labels functions body .)
+    LBRACE          reduce using rule 12 (block -> labels functions body .)
+
+
+state 87
+
+    (13) block -> labels variables body .
+    $end            reduce using rule 13 (block -> labels variables body .)
+    VOID            reduce using rule 13 (block -> labels variables body .)
+    WRITE           reduce using rule 13 (block -> labels variables body .)
+    READ            reduce using rule 13 (block -> labels variables body .)
+    FALSE           reduce using rule 13 (block -> labels variables body .)
+    TRUE            reduce using rule 13 (block -> labels variables body .)
+    BOOLEAN         reduce using rule 13 (block -> labels variables body .)
+    INTEGER         reduce using rule 13 (block -> labels variables body .)
+    ID              reduce using rule 13 (block -> labels variables body .)
+    LBRACE          reduce using rule 13 (block -> labels variables body .)
+
+
+state 88
+
+    (16) block -> labels variables functions . body
+    (20) body -> . LBRACE statements RBRACE
+    LBRACE          shift and go to state 23
+
+    body                           shift and go to state 130
+
+state 89
+
+    (14) block -> labels types body .
+    $end            reduce using rule 14 (block -> labels types body .)
+    VOID            reduce using rule 14 (block -> labels types body .)
+    WRITE           reduce using rule 14 (block -> labels types body .)
+    READ            reduce using rule 14 (block -> labels types body .)
+    FALSE           reduce using rule 14 (block -> labels types body .)
+    TRUE            reduce using rule 14 (block -> labels types body .)
+    BOOLEAN         reduce using rule 14 (block -> labels types body .)
+    INTEGER         reduce using rule 14 (block -> labels types body .)
+    ID              reduce using rule 14 (block -> labels types body .)
+    LBRACE          reduce using rule 14 (block -> labels types body .)
+
+
+state 90
+
+    (17) block -> labels types variables . body
+    (19) block -> labels types variables . functions body
+    (20) body -> . LBRACE statements RBRACE
+    (29) functions -> . FUNCTIONS functions_n
+    LBRACE          shift and go to state 23
+    FUNCTIONS       shift and go to state 27
+
+    body                           shift and go to state 131
+    functions                      shift and go to state 132
+
+state 91
+
+    (18) block -> labels types functions . body
+    (20) body -> . LBRACE statements RBRACE
+    LBRACE          shift and go to state 23
+
+    body                           shift and go to state 133
+
+state 92
+
+    (9) block -> variables functions body .
+    $end            reduce using rule 9 (block -> variables functions body .)
+    VOID            reduce using rule 9 (block -> variables functions body .)
+    WRITE           reduce using rule 9 (block -> variables functions body .)
+    READ            reduce using rule 9 (block -> variables functions body .)
+    FALSE           reduce using rule 9 (block -> variables functions body .)
+    TRUE            reduce using rule 9 (block -> variables functions body .)
+    BOOLEAN         reduce using rule 9 (block -> variables functions body .)
+    INTEGER         reduce using rule 9 (block -> variables functions body .)
+    ID              reduce using rule 9 (block -> variables functions body .)
+    LBRACE          reduce using rule 9 (block -> variables functions body .)
+
+
+state 93
+
+    (52) compound -> LBRACE unlabeled_statements . RBRACE
+    RBRACE          shift and go to state 134
+
+
+state 94
+
+    (43) unlabeled_statements -> unlabeled_statement .
+    (44) unlabeled_statements -> unlabeled_statement . unlabeled_statements
+    (43) unlabeled_statements -> . unlabeled_statement
+    (44) unlabeled_statements -> . unlabeled_statement unlabeled_statements
+    (36) unlabeled_statement -> . empty_statement
+    (37) unlabeled_statement -> . repetitive
+    (38) unlabeled_statement -> . conditional
+    (39) unlabeled_statement -> . return_rule
+    (40) unlabeled_statement -> . goto
+    (41) unlabeled_statement -> . function_call_statement
+    (42) unlabeled_statement -> . assignment
+    (48) empty_statement -> . SCOLON
+    (51) repetitive -> . WHILE expression compound
+    (49) conditional -> . IF LPAREN expression RPAREN compound
+    (50) conditional -> . IF LPAREN expression RPAREN compound ELSE compound
+    (46) return_rule -> . RETURN SCOLON
+    (47) return_rule -> . RETURN expression SCOLON
+    (45) goto -> . GOTO identifier SCOLON
+    (90) function_call_statement -> . function_call
+    (53) assignment -> . variable ASSIGN expression SCOLON
+    (91) function_call -> . identifier LPAREN expression_list RPAREN
+    (66) variable -> . ID LBRACKET expression RBRACKET
+    (67) variable -> . ID
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    RBRACE          reduce using rule 43 (unlabeled_statements -> unlabeled_statement .)
+    SCOLON          shift and go to state 61
+    WHILE           shift and go to state 62
+    IF              shift and go to state 63
+    RETURN          shift and go to state 64
+    GOTO            shift and go to state 65
+    ID              shift and go to state 96
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+
+    unlabeled_statement            shift and go to state 94
+    unlabeled_statements           shift and go to state 135
+    empty_statement                shift and go to state 53
+    repetitive                     shift and go to state 54
+    conditional                    shift and go to state 55
+    return_rule                    shift and go to state 56
+    goto                           shift and go to state 57
+    function_call_statement        shift and go to state 58
+    assignment                     shift and go to state 59
+    identifier                     shift and go to state 95
+    function_call                  shift and go to state 66
+    variable                       shift and go to state 67
+
+state 95
+
+    (91) function_call -> identifier . LPAREN expression_list RPAREN
+    LPAREN          shift and go to state 100
+
+
+state 96
+
+    (66) variable -> ID . LBRACKET expression RBRACKET
+    (67) variable -> ID .
+    (109) identifier -> ID .
+    LBRACKET        shift and go to state 101
+    ASSIGN          reduce using rule 67 (variable -> ID .)
+    AND             reduce using rule 67 (variable -> ID .)
+    DIVIDE          reduce using rule 67 (variable -> ID .)
+    TIMES           reduce using rule 67 (variable -> ID .)
+    OR              reduce using rule 67 (variable -> ID .)
+    MINUS           reduce using rule 67 (variable -> ID .)
+    PLUS            reduce using rule 67 (variable -> ID .)
+    GREATER         reduce using rule 67 (variable -> ID .)
+    GEQ             reduce using rule 67 (variable -> ID .)
+    LEQ             reduce using rule 67 (variable -> ID .)
+    LESS            reduce using rule 67 (variable -> ID .)
+    NEQ             reduce using rule 67 (variable -> ID .)
+    EQUAL           reduce using rule 67 (variable -> ID .)
+    LBRACE          reduce using rule 67 (variable -> ID .)
+    SCOLON          reduce using rule 67 (variable -> ID .)
+    COMMA           reduce using rule 67 (variable -> ID .)
+    RPAREN          reduce using rule 67 (variable -> ID .)
+    RBRACKET        reduce using rule 67 (variable -> ID .)
+    LPAREN          reduce using rule 109 (identifier -> ID .)
+
+
+state 97
+
+    (20) body -> LBRACE statements RBRACE .
+    $end            reduce using rule 20 (body -> LBRACE statements RBRACE .)
+    VOID            reduce using rule 20 (body -> LBRACE statements RBRACE .)
+    WRITE           reduce using rule 20 (body -> LBRACE statements RBRACE .)
+    READ            reduce using rule 20 (body -> LBRACE statements RBRACE .)
+    FALSE           reduce using rule 20 (body -> LBRACE statements RBRACE .)
+    TRUE            reduce using rule 20 (body -> LBRACE statements RBRACE .)
+    BOOLEAN         reduce using rule 20 (body -> LBRACE statements RBRACE .)
+    INTEGER         reduce using rule 20 (body -> LBRACE statements RBRACE .)
+    ID              reduce using rule 20 (body -> LBRACE statements RBRACE .)
+    LBRACE          reduce using rule 20 (body -> LBRACE statements RBRACE .)
+
+
+state 98
+
+    (22) statements -> statement statements .
+    RBRACE          reduce using rule 22 (statements -> statement statements .)
+
+
+state 99
+
+    (34) statement -> identifier COLON . compound
+    (35) statement -> identifier COLON . unlabeled_statement
+    (52) compound -> . LBRACE unlabeled_statements RBRACE
+    (36) unlabeled_statement -> . empty_statement
+    (37) unlabeled_statement -> . repetitive
+    (38) unlabeled_statement -> . conditional
+    (39) unlabeled_statement -> . return_rule
+    (40) unlabeled_statement -> . goto
+    (41) unlabeled_statement -> . function_call_statement
+    (42) unlabeled_statement -> . assignment
+    (48) empty_statement -> . SCOLON
+    (51) repetitive -> . WHILE expression compound
+    (49) conditional -> . IF LPAREN expression RPAREN compound
+    (50) conditional -> . IF LPAREN expression RPAREN compound ELSE compound
+    (46) return_rule -> . RETURN SCOLON
+    (47) return_rule -> . RETURN expression SCOLON
+    (45) goto -> . GOTO identifier SCOLON
+    (90) function_call_statement -> . function_call
+    (53) assignment -> . variable ASSIGN expression SCOLON
+    (91) function_call -> . identifier LPAREN expression_list RPAREN
+    (66) variable -> . ID LBRACKET expression RBRACKET
+    (67) variable -> . ID
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    LBRACE          shift and go to state 47
+    SCOLON          shift and go to state 61
+    WHILE           shift and go to state 62
+    IF              shift and go to state 63
+    RETURN          shift and go to state 64
+    GOTO            shift and go to state 65
+    ID              shift and go to state 96
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+
+    identifier                     shift and go to state 95
+    compound                       shift and go to state 136
+    unlabeled_statement            shift and go to state 137
+    empty_statement                shift and go to state 53
+    repetitive                     shift and go to state 54
+    conditional                    shift and go to state 55
+    return_rule                    shift and go to state 56
+    goto                           shift and go to state 57
+    function_call_statement        shift and go to state 58
+    assignment                     shift and go to state 59
+    function_call                  shift and go to state 66
+    variable                       shift and go to state 67
+
+state 100
+
+    (91) function_call -> identifier LPAREN . expression_list RPAREN
+    (92) expression_list -> .
+    (93) expression_list -> . expression expression_list_n
+    (96) expression -> . simple_expression
+    (97) expression -> . simple_expression relational_operator simple_expression
+    (100) simple_expression -> . term simple_expression_n
+    (101) simple_expression -> . MINUS term simple_expression_n
+    (102) simple_expression -> . PLUS term simple_expression_n
+    (89) term -> . factor mulop_term
+    (70) factor -> . function_call
+    (71) factor -> . integer
+    (72) factor -> . variable
+    (73) factor -> . NOT factor
+    (74) factor -> . LPAREN expression RPAREN
+    (91) function_call -> . identifier LPAREN expression_list RPAREN
+    (110) integer -> . NUMBER
+    (66) variable -> . ID LBRACKET expression RBRACKET
+    (67) variable -> . ID
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    RPAREN          reduce using rule 92 (expression_list -> .)
+    MINUS           shift and go to state 105
+    PLUS            shift and go to state 106
+    NOT             shift and go to state 111
+    LPAREN          shift and go to state 112
+    NUMBER          shift and go to state 113
+    ID              shift and go to state 96
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+
+    identifier                     shift and go to state 95
+    expression_list                shift and go to state 138
+    expression                     shift and go to state 139
+    simple_expression              shift and go to state 103
+    term                           shift and go to state 104
+    factor                         shift and go to state 107
+    function_call                  shift and go to state 108
+    integer                        shift and go to state 109
+    variable                       shift and go to state 110
+
+state 101
+
+    (66) variable -> ID LBRACKET . expression RBRACKET
+    (96) expression -> . simple_expression
+    (97) expression -> . simple_expression relational_operator simple_expression
+    (100) simple_expression -> . term simple_expression_n
+    (101) simple_expression -> . MINUS term simple_expression_n
+    (102) simple_expression -> . PLUS term simple_expression_n
+    (89) term -> . factor mulop_term
+    (70) factor -> . function_call
+    (71) factor -> . integer
+    (72) factor -> . variable
+    (73) factor -> . NOT factor
+    (74) factor -> . LPAREN expression RPAREN
+    (91) function_call -> . identifier LPAREN expression_list RPAREN
+    (110) integer -> . NUMBER
+    (66) variable -> . ID LBRACKET expression RBRACKET
+    (67) variable -> . ID
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    MINUS           shift and go to state 105
+    PLUS            shift and go to state 106
+    NOT             shift and go to state 111
+    LPAREN          shift and go to state 112
+    NUMBER          shift and go to state 113
+    ID              shift and go to state 96
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+
+    expression                     shift and go to state 140
+    simple_expression              shift and go to state 103
+    term                           shift and go to state 104
+    factor                         shift and go to state 107
+    function_call                  shift and go to state 108
+    integer                        shift and go to state 109
+    variable                       shift and go to state 110
+    identifier                     shift and go to state 95
+
+state 102
+
+    (51) repetitive -> WHILE expression . compound
+    (52) compound -> . LBRACE unlabeled_statements RBRACE
+    LBRACE          shift and go to state 47
+
+    compound                       shift and go to state 141
+
+state 103
+
+    (96) expression -> simple_expression .
+    (97) expression -> simple_expression . relational_operator simple_expression
+    (81) relational_operator -> . GREATER
+    (82) relational_operator -> . GEQ
+    (83) relational_operator -> . LEQ
+    (84) relational_operator -> . LESS
+    (85) relational_operator -> . NEQ
+    (86) relational_operator -> . EQUAL
+    LBRACE          reduce using rule 96 (expression -> simple_expression .)
+    SCOLON          reduce using rule 96 (expression -> simple_expression .)
+    COMMA           reduce using rule 96 (expression -> simple_expression .)
+    RPAREN          reduce using rule 96 (expression -> simple_expression .)
+    RBRACKET        reduce using rule 96 (expression -> simple_expression .)
+    GREATER         shift and go to state 143
+    GEQ             shift and go to state 144
+    LEQ             shift and go to state 145
+    LESS            shift and go to state 146
+    NEQ             shift and go to state 147
+    EQUAL           shift and go to state 148
+
+    relational_operator            shift and go to state 142
+
+state 104
+
+    (100) simple_expression -> term . simple_expression_n
+    (98) simple_expression_n -> . additive_operator term simple_expression_n
+    (99) simple_expression_n -> .
+    (75) additive_operator -> . OR
+    (76) additive_operator -> . MINUS
+    (77) additive_operator -> . PLUS
+    GREATER         reduce using rule 99 (simple_expression_n -> .)
+    GEQ             reduce using rule 99 (simple_expression_n -> .)
+    LEQ             reduce using rule 99 (simple_expression_n -> .)
+    LESS            reduce using rule 99 (simple_expression_n -> .)
+    NEQ             reduce using rule 99 (simple_expression_n -> .)
+    EQUAL           reduce using rule 99 (simple_expression_n -> .)
+    LBRACE          reduce using rule 99 (simple_expression_n -> .)
+    SCOLON          reduce using rule 99 (simple_expression_n -> .)
+    COMMA           reduce using rule 99 (simple_expression_n -> .)
+    RPAREN          reduce using rule 99 (simple_expression_n -> .)
+    RBRACKET        reduce using rule 99 (simple_expression_n -> .)
+    OR              shift and go to state 151
+    MINUS           shift and go to state 152
+    PLUS            shift and go to state 153
+
+    simple_expression_n            shift and go to state 149
+    additive_operator              shift and go to state 150
+
+state 105
+
+    (101) simple_expression -> MINUS . term simple_expression_n
+    (89) term -> . factor mulop_term
+    (70) factor -> . function_call
+    (71) factor -> . integer
+    (72) factor -> . variable
+    (73) factor -> . NOT factor
+    (74) factor -> . LPAREN expression RPAREN
+    (91) function_call -> . identifier LPAREN expression_list RPAREN
+    (110) integer -> . NUMBER
+    (66) variable -> . ID LBRACKET expression RBRACKET
+    (67) variable -> . ID
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    NOT             shift and go to state 111
+    LPAREN          shift and go to state 112
+    NUMBER          shift and go to state 113
+    ID              shift and go to state 96
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+
+    term                           shift and go to state 154
+    factor                         shift and go to state 107
+    function_call                  shift and go to state 108
+    integer                        shift and go to state 109
+    variable                       shift and go to state 110
+    identifier                     shift and go to state 95
+
+state 106
+
+    (102) simple_expression -> PLUS . term simple_expression_n
+    (89) term -> . factor mulop_term
+    (70) factor -> . function_call
+    (71) factor -> . integer
+    (72) factor -> . variable
+    (73) factor -> . NOT factor
+    (74) factor -> . LPAREN expression RPAREN
+    (91) function_call -> . identifier LPAREN expression_list RPAREN
+    (110) integer -> . NUMBER
+    (66) variable -> . ID LBRACKET expression RBRACKET
+    (67) variable -> . ID
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    NOT             shift and go to state 111
+    LPAREN          shift and go to state 112
+    NUMBER          shift and go to state 113
+    ID              shift and go to state 96
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+
+    term                           shift and go to state 155
+    factor                         shift and go to state 107
+    function_call                  shift and go to state 108
+    integer                        shift and go to state 109
+    variable                       shift and go to state 110
+    identifier                     shift and go to state 95
+
+state 107
+
+    (89) term -> factor . mulop_term
+    (87) mulop_term -> . multiplicative_operator factor mulop_term
+    (88) mulop_term -> .
+    (78) multiplicative_operator -> . AND
+    (79) multiplicative_operator -> . DIVIDE
+    (80) multiplicative_operator -> . TIMES
+    OR              reduce using rule 88 (mulop_term -> .)
+    MINUS           reduce using rule 88 (mulop_term -> .)
+    PLUS            reduce using rule 88 (mulop_term -> .)
+    GREATER         reduce using rule 88 (mulop_term -> .)
+    GEQ             reduce using rule 88 (mulop_term -> .)
+    LEQ             reduce using rule 88 (mulop_term -> .)
+    LESS            reduce using rule 88 (mulop_term -> .)
+    NEQ             reduce using rule 88 (mulop_term -> .)
+    EQUAL           reduce using rule 88 (mulop_term -> .)
+    LBRACE          reduce using rule 88 (mulop_term -> .)
+    SCOLON          reduce using rule 88 (mulop_term -> .)
+    COMMA           reduce using rule 88 (mulop_term -> .)
+    RPAREN          reduce using rule 88 (mulop_term -> .)
+    RBRACKET        reduce using rule 88 (mulop_term -> .)
+    AND             shift and go to state 158
+    DIVIDE          shift and go to state 159
+    TIMES           shift and go to state 160
+
+    mulop_term                     shift and go to state 156
+    multiplicative_operator        shift and go to state 157
+
+state 108
+
+    (70) factor -> function_call .
+    AND             reduce using rule 70 (factor -> function_call .)
+    DIVIDE          reduce using rule 70 (factor -> function_call .)
+    TIMES           reduce using rule 70 (factor -> function_call .)
+    OR              reduce using rule 70 (factor -> function_call .)
+    MINUS           reduce using rule 70 (factor -> function_call .)
+    PLUS            reduce using rule 70 (factor -> function_call .)
+    GREATER         reduce using rule 70 (factor -> function_call .)
+    GEQ             reduce using rule 70 (factor -> function_call .)
+    LEQ             reduce using rule 70 (factor -> function_call .)
+    LESS            reduce using rule 70 (factor -> function_call .)
+    NEQ             reduce using rule 70 (factor -> function_call .)
+    EQUAL           reduce using rule 70 (factor -> function_call .)
+    LBRACE          reduce using rule 70 (factor -> function_call .)
+    SCOLON          reduce using rule 70 (factor -> function_call .)
+    COMMA           reduce using rule 70 (factor -> function_call .)
+    RPAREN          reduce using rule 70 (factor -> function_call .)
+    RBRACKET        reduce using rule 70 (factor -> function_call .)
+
+
+state 109
+
+    (71) factor -> integer .
+    AND             reduce using rule 71 (factor -> integer .)
+    DIVIDE          reduce using rule 71 (factor -> integer .)
+    TIMES           reduce using rule 71 (factor -> integer .)
+    OR              reduce using rule 71 (factor -> integer .)
+    MINUS           reduce using rule 71 (factor -> integer .)
+    PLUS            reduce using rule 71 (factor -> integer .)
+    GREATER         reduce using rule 71 (factor -> integer .)
+    GEQ             reduce using rule 71 (factor -> integer .)
+    LEQ             reduce using rule 71 (factor -> integer .)
+    LESS            reduce using rule 71 (factor -> integer .)
+    NEQ             reduce using rule 71 (factor -> integer .)
+    EQUAL           reduce using rule 71 (factor -> integer .)
+    LBRACE          reduce using rule 71 (factor -> integer .)
+    SCOLON          reduce using rule 71 (factor -> integer .)
+    COMMA           reduce using rule 71 (factor -> integer .)
+    RPAREN          reduce using rule 71 (factor -> integer .)
+    RBRACKET        reduce using rule 71 (factor -> integer .)
+
+
+state 110
+
+    (72) factor -> variable .
+    AND             reduce using rule 72 (factor -> variable .)
+    DIVIDE          reduce using rule 72 (factor -> variable .)
+    TIMES           reduce using rule 72 (factor -> variable .)
+    OR              reduce using rule 72 (factor -> variable .)
+    MINUS           reduce using rule 72 (factor -> variable .)
+    PLUS            reduce using rule 72 (factor -> variable .)
+    GREATER         reduce using rule 72 (factor -> variable .)
+    GEQ             reduce using rule 72 (factor -> variable .)
+    LEQ             reduce using rule 72 (factor -> variable .)
+    LESS            reduce using rule 72 (factor -> variable .)
+    NEQ             reduce using rule 72 (factor -> variable .)
+    EQUAL           reduce using rule 72 (factor -> variable .)
+    LBRACE          reduce using rule 72 (factor -> variable .)
+    SCOLON          reduce using rule 72 (factor -> variable .)
+    COMMA           reduce using rule 72 (factor -> variable .)
+    RPAREN          reduce using rule 72 (factor -> variable .)
+    RBRACKET        reduce using rule 72 (factor -> variable .)
+
+
+state 111
+
+    (73) factor -> NOT . factor
+    (70) factor -> . function_call
+    (71) factor -> . integer
+    (72) factor -> . variable
+    (73) factor -> . NOT factor
+    (74) factor -> . LPAREN expression RPAREN
+    (91) function_call -> . identifier LPAREN expression_list RPAREN
+    (110) integer -> . NUMBER
+    (66) variable -> . ID LBRACKET expression RBRACKET
+    (67) variable -> . ID
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    NOT             shift and go to state 111
+    LPAREN          shift and go to state 112
+    NUMBER          shift and go to state 113
+    ID              shift and go to state 96
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+
+    factor                         shift and go to state 161
+    function_call                  shift and go to state 108
+    integer                        shift and go to state 109
+    variable                       shift and go to state 110
+    identifier                     shift and go to state 95
+
+state 112
+
+    (74) factor -> LPAREN . expression RPAREN
+    (96) expression -> . simple_expression
+    (97) expression -> . simple_expression relational_operator simple_expression
+    (100) simple_expression -> . term simple_expression_n
+    (101) simple_expression -> . MINUS term simple_expression_n
+    (102) simple_expression -> . PLUS term simple_expression_n
+    (89) term -> . factor mulop_term
+    (70) factor -> . function_call
+    (71) factor -> . integer
+    (72) factor -> . variable
+    (73) factor -> . NOT factor
+    (74) factor -> . LPAREN expression RPAREN
+    (91) function_call -> . identifier LPAREN expression_list RPAREN
+    (110) integer -> . NUMBER
+    (66) variable -> . ID LBRACKET expression RBRACKET
+    (67) variable -> . ID
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    MINUS           shift and go to state 105
+    PLUS            shift and go to state 106
+    NOT             shift and go to state 111
+    LPAREN          shift and go to state 112
+    NUMBER          shift and go to state 113
+    ID              shift and go to state 96
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+
+    expression                     shift and go to state 162
+    simple_expression              shift and go to state 103
+    term                           shift and go to state 104
+    factor                         shift and go to state 107
+    function_call                  shift and go to state 108
+    integer                        shift and go to state 109
+    variable                       shift and go to state 110
+    identifier                     shift and go to state 95
+
+state 113
+
+    (110) integer -> NUMBER .
+    AND             reduce using rule 110 (integer -> NUMBER .)
+    DIVIDE          reduce using rule 110 (integer -> NUMBER .)
+    TIMES           reduce using rule 110 (integer -> NUMBER .)
+    OR              reduce using rule 110 (integer -> NUMBER .)
+    MINUS           reduce using rule 110 (integer -> NUMBER .)
+    PLUS            reduce using rule 110 (integer -> NUMBER .)
+    GREATER         reduce using rule 110 (integer -> NUMBER .)
+    GEQ             reduce using rule 110 (integer -> NUMBER .)
+    LEQ             reduce using rule 110 (integer -> NUMBER .)
+    LESS            reduce using rule 110 (integer -> NUMBER .)
+    NEQ             reduce using rule 110 (integer -> NUMBER .)
+    EQUAL           reduce using rule 110 (integer -> NUMBER .)
+    LBRACE          reduce using rule 110 (integer -> NUMBER .)
+    SCOLON          reduce using rule 110 (integer -> NUMBER .)
+    COMMA           reduce using rule 110 (integer -> NUMBER .)
+    RPAREN          reduce using rule 110 (integer -> NUMBER .)
+    RBRACKET        reduce using rule 110 (integer -> NUMBER .)
+
+
+state 114
+
+    (49) conditional -> IF LPAREN . expression RPAREN compound
+    (50) conditional -> IF LPAREN . expression RPAREN compound ELSE compound
+    (96) expression -> . simple_expression
+    (97) expression -> . simple_expression relational_operator simple_expression
+    (100) simple_expression -> . term simple_expression_n
+    (101) simple_expression -> . MINUS term simple_expression_n
+    (102) simple_expression -> . PLUS term simple_expression_n
+    (89) term -> . factor mulop_term
+    (70) factor -> . function_call
+    (71) factor -> . integer
+    (72) factor -> . variable
+    (73) factor -> . NOT factor
+    (74) factor -> . LPAREN expression RPAREN
+    (91) function_call -> . identifier LPAREN expression_list RPAREN
+    (110) integer -> . NUMBER
+    (66) variable -> . ID LBRACKET expression RBRACKET
+    (67) variable -> . ID
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    MINUS           shift and go to state 105
+    PLUS            shift and go to state 106
+    NOT             shift and go to state 111
+    LPAREN          shift and go to state 112
+    NUMBER          shift and go to state 113
+    ID              shift and go to state 96
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+
+    expression                     shift and go to state 163
+    simple_expression              shift and go to state 103
+    term                           shift and go to state 104
+    factor                         shift and go to state 107
+    function_call                  shift and go to state 108
+    integer                        shift and go to state 109
+    variable                       shift and go to state 110
+    identifier                     shift and go to state 95
+
+state 115
+
+    (46) return_rule -> RETURN SCOLON .
+    LBRACE          reduce using rule 46 (return_rule -> RETURN SCOLON .)
+    WRITE           reduce using rule 46 (return_rule -> RETURN SCOLON .)
+    READ            reduce using rule 46 (return_rule -> RETURN SCOLON .)
+    FALSE           reduce using rule 46 (return_rule -> RETURN SCOLON .)
+    TRUE            reduce using rule 46 (return_rule -> RETURN SCOLON .)
+    BOOLEAN         reduce using rule 46 (return_rule -> RETURN SCOLON .)
+    INTEGER         reduce using rule 46 (return_rule -> RETURN SCOLON .)
+    ID              reduce using rule 46 (return_rule -> RETURN SCOLON .)
+    SCOLON          reduce using rule 46 (return_rule -> RETURN SCOLON .)
+    WHILE           reduce using rule 46 (return_rule -> RETURN SCOLON .)
+    IF              reduce using rule 46 (return_rule -> RETURN SCOLON .)
+    RETURN          reduce using rule 46 (return_rule -> RETURN SCOLON .)
+    GOTO            reduce using rule 46 (return_rule -> RETURN SCOLON .)
+    RBRACE          reduce using rule 46 (return_rule -> RETURN SCOLON .)
+
+
+state 116
+
+    (47) return_rule -> RETURN expression . SCOLON
+    SCOLON          shift and go to state 164
+
+
+state 117
+
+    (45) goto -> GOTO identifier . SCOLON
+    SCOLON          shift and go to state 165
+
+
+state 118
+
+    (53) assignment -> variable ASSIGN . expression SCOLON
+    (96) expression -> . simple_expression
+    (97) expression -> . simple_expression relational_operator simple_expression
+    (100) simple_expression -> . term simple_expression_n
+    (101) simple_expression -> . MINUS term simple_expression_n
+    (102) simple_expression -> . PLUS term simple_expression_n
+    (89) term -> . factor mulop_term
+    (70) factor -> . function_call
+    (71) factor -> . integer
+    (72) factor -> . variable
+    (73) factor -> . NOT factor
+    (74) factor -> . LPAREN expression RPAREN
+    (91) function_call -> . identifier LPAREN expression_list RPAREN
+    (110) integer -> . NUMBER
+    (66) variable -> . ID LBRACKET expression RBRACKET
+    (67) variable -> . ID
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    MINUS           shift and go to state 105
+    PLUS            shift and go to state 106
+    NOT             shift and go to state 111
+    LPAREN          shift and go to state 112
+    NUMBER          shift and go to state 113
+    ID              shift and go to state 96
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+
+    variable                       shift and go to state 110
+    expression                     shift and go to state 166
+    simple_expression              shift and go to state 103
+    term                           shift and go to state 104
+    factor                         shift and go to state 107
+    function_call                  shift and go to state 108
+    integer                        shift and go to state 109
+    identifier                     shift and go to state 95
+
+state 119
+
+    (27) types_n -> identifier ASSIGN . vartype SCOLON
+    (28) types_n -> identifier ASSIGN . vartype SCOLON types_n
+    (68) vartype -> . identifier
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+    ID              shift and go to state 11
+
+    identifier                     shift and go to state 167
+    vartype                        shift and go to state 168
+
+state 120
+
+    (69) labels -> LABELS identifier_list SCOLON .
+    LBRACE          reduce using rule 69 (labels -> LABELS identifier_list SCOLON .)
+    FUNCTIONS       reduce using rule 69 (labels -> LABELS identifier_list SCOLON .)
+    VARS            reduce using rule 69 (labels -> LABELS identifier_list SCOLON .)
+    TYPES           reduce using rule 69 (labels -> LABELS identifier_list SCOLON .)
+
+
+state 121
+
+    (24) variables_n -> identifier_list COLON . vartype SCOLON
+    (25) variables_n -> identifier_list COLON . vartype SCOLON variables_n
+    (68) vartype -> . identifier
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+    ID              shift and go to state 11
+
+    vartype                        shift and go to state 169
+    identifier                     shift and go to state 167
+
+state 122
+
+    (31) functions_n -> function functions_n .
+    LBRACE          reduce using rule 31 (functions_n -> function functions_n .)
+
+
+state 123
+
+    (55) formal_parameters_n -> formal_parameter SCOLON formal_parameters_n .
+    RPAREN          reduce using rule 55 (formal_parameters_n -> formal_parameter SCOLON formal_parameters_n .)
+
+
+state 124
+
+    (62) function_parameter -> VOID identifier formal_parameters .
+    SCOLON          reduce using rule 62 (function_parameter -> VOID identifier formal_parameters .)
+    RPAREN          reduce using rule 62 (function_parameter -> VOID identifier formal_parameters .)
+
+
+state 125
+
+    (63) function_parameter -> identifier identifier formal_parameters .
+    SCOLON          reduce using rule 63 (function_parameter -> identifier identifier formal_parameters .)
+    RPAREN          reduce using rule 63 (function_parameter -> identifier identifier formal_parameters .)
+
+
+state 126
+
+    (64) identifier_list -> identifier COMMA identifier_list .
+    COLON           reduce using rule 64 (identifier_list -> identifier COMMA identifier_list .)
+    SCOLON          reduce using rule 64 (identifier_list -> identifier COMMA identifier_list .)
+
+
+state 127
+
+    (60) expression_parameter -> VAR identifier_list COLON . identifier
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+    ID              shift and go to state 11
+
+    identifier                     shift and go to state 170
+
+state 128
+
+    (61) expression_parameter -> identifier_list COLON identifier .
+    SCOLON          reduce using rule 61 (expression_parameter -> identifier_list COLON identifier .)
+    RPAREN          reduce using rule 61 (expression_parameter -> identifier_list COLON identifier .)
+
+
+state 129
+
+    (15) block -> types variables functions body .
+    $end            reduce using rule 15 (block -> types variables functions body .)
+    VOID            reduce using rule 15 (block -> types variables functions body .)
+    WRITE           reduce using rule 15 (block -> types variables functions body .)
+    READ            reduce using rule 15 (block -> types variables functions body .)
+    FALSE           reduce using rule 15 (block -> types variables functions body .)
+    TRUE            reduce using rule 15 (block -> types variables functions body .)
+    BOOLEAN         reduce using rule 15 (block -> types variables functions body .)
+    INTEGER         reduce using rule 15 (block -> types variables functions body .)
+    ID              reduce using rule 15 (block -> types variables functions body .)
+    LBRACE          reduce using rule 15 (block -> types variables functions body .)
+
+
+state 130
+
+    (16) block -> labels variables functions body .
+    $end            reduce using rule 16 (block -> labels variables functions body .)
+    VOID            reduce using rule 16 (block -> labels variables functions body .)
+    WRITE           reduce using rule 16 (block -> labels variables functions body .)
+    READ            reduce using rule 16 (block -> labels variables functions body .)
+    FALSE           reduce using rule 16 (block -> labels variables functions body .)
+    TRUE            reduce using rule 16 (block -> labels variables functions body .)
+    BOOLEAN         reduce using rule 16 (block -> labels variables functions body .)
+    INTEGER         reduce using rule 16 (block -> labels variables functions body .)
+    ID              reduce using rule 16 (block -> labels variables functions body .)
+    LBRACE          reduce using rule 16 (block -> labels variables functions body .)
+
+
+state 131
+
+    (17) block -> labels types variables body .
+    $end            reduce using rule 17 (block -> labels types variables body .)
+    VOID            reduce using rule 17 (block -> labels types variables body .)
+    WRITE           reduce using rule 17 (block -> labels types variables body .)
+    READ            reduce using rule 17 (block -> labels types variables body .)
+    FALSE           reduce using rule 17 (block -> labels types variables body .)
+    TRUE            reduce using rule 17 (block -> labels types variables body .)
+    BOOLEAN         reduce using rule 17 (block -> labels types variables body .)
+    INTEGER         reduce using rule 17 (block -> labels types variables body .)
+    ID              reduce using rule 17 (block -> labels types variables body .)
+    LBRACE          reduce using rule 17 (block -> labels types variables body .)
+
+
+state 132
+
+    (19) block -> labels types variables functions . body
+    (20) body -> . LBRACE statements RBRACE
+    LBRACE          shift and go to state 23
+
+    body                           shift and go to state 171
+
+state 133
+
+    (18) block -> labels types functions body .
+    $end            reduce using rule 18 (block -> labels types functions body .)
+    VOID            reduce using rule 18 (block -> labels types functions body .)
+    WRITE           reduce using rule 18 (block -> labels types functions body .)
+    READ            reduce using rule 18 (block -> labels types functions body .)
+    FALSE           reduce using rule 18 (block -> labels types functions body .)
+    TRUE            reduce using rule 18 (block -> labels types functions body .)
+    BOOLEAN         reduce using rule 18 (block -> labels types functions body .)
+    INTEGER         reduce using rule 18 (block -> labels types functions body .)
+    ID              reduce using rule 18 (block -> labels types functions body .)
+    LBRACE          reduce using rule 18 (block -> labels types functions body .)
+
+
+state 134
+
+    (52) compound -> LBRACE unlabeled_statements RBRACE .
+    LBRACE          reduce using rule 52 (compound -> LBRACE unlabeled_statements RBRACE .)
+    WRITE           reduce using rule 52 (compound -> LBRACE unlabeled_statements RBRACE .)
+    READ            reduce using rule 52 (compound -> LBRACE unlabeled_statements RBRACE .)
+    FALSE           reduce using rule 52 (compound -> LBRACE unlabeled_statements RBRACE .)
+    TRUE            reduce using rule 52 (compound -> LBRACE unlabeled_statements RBRACE .)
+    BOOLEAN         reduce using rule 52 (compound -> LBRACE unlabeled_statements RBRACE .)
+    INTEGER         reduce using rule 52 (compound -> LBRACE unlabeled_statements RBRACE .)
+    ID              reduce using rule 52 (compound -> LBRACE unlabeled_statements RBRACE .)
+    SCOLON          reduce using rule 52 (compound -> LBRACE unlabeled_statements RBRACE .)
+    WHILE           reduce using rule 52 (compound -> LBRACE unlabeled_statements RBRACE .)
+    IF              reduce using rule 52 (compound -> LBRACE unlabeled_statements RBRACE .)
+    RETURN          reduce using rule 52 (compound -> LBRACE unlabeled_statements RBRACE .)
+    GOTO            reduce using rule 52 (compound -> LBRACE unlabeled_statements RBRACE .)
+    RBRACE          reduce using rule 52 (compound -> LBRACE unlabeled_statements RBRACE .)
+    ELSE            reduce using rule 52 (compound -> LBRACE unlabeled_statements RBRACE .)
+
+
+state 135
+
+    (44) unlabeled_statements -> unlabeled_statement unlabeled_statements .
+    RBRACE          reduce using rule 44 (unlabeled_statements -> unlabeled_statement unlabeled_statements .)
+
+
+state 136
+
+    (34) statement -> identifier COLON compound .
+    LBRACE          reduce using rule 34 (statement -> identifier COLON compound .)
+    WRITE           reduce using rule 34 (statement -> identifier COLON compound .)
+    READ            reduce using rule 34 (statement -> identifier COLON compound .)
+    FALSE           reduce using rule 34 (statement -> identifier COLON compound .)
+    TRUE            reduce using rule 34 (statement -> identifier COLON compound .)
+    BOOLEAN         reduce using rule 34 (statement -> identifier COLON compound .)
+    INTEGER         reduce using rule 34 (statement -> identifier COLON compound .)
+    ID              reduce using rule 34 (statement -> identifier COLON compound .)
+    SCOLON          reduce using rule 34 (statement -> identifier COLON compound .)
+    WHILE           reduce using rule 34 (statement -> identifier COLON compound .)
+    IF              reduce using rule 34 (statement -> identifier COLON compound .)
+    RETURN          reduce using rule 34 (statement -> identifier COLON compound .)
+    GOTO            reduce using rule 34 (statement -> identifier COLON compound .)
+    RBRACE          reduce using rule 34 (statement -> identifier COLON compound .)
+
+
+state 137
+
+    (35) statement -> identifier COLON unlabeled_statement .
+    LBRACE          reduce using rule 35 (statement -> identifier COLON unlabeled_statement .)
+    WRITE           reduce using rule 35 (statement -> identifier COLON unlabeled_statement .)
+    READ            reduce using rule 35 (statement -> identifier COLON unlabeled_statement .)
+    FALSE           reduce using rule 35 (statement -> identifier COLON unlabeled_statement .)
+    TRUE            reduce using rule 35 (statement -> identifier COLON unlabeled_statement .)
+    BOOLEAN         reduce using rule 35 (statement -> identifier COLON unlabeled_statement .)
+    INTEGER         reduce using rule 35 (statement -> identifier COLON unlabeled_statement .)
+    ID              reduce using rule 35 (statement -> identifier COLON unlabeled_statement .)
+    SCOLON          reduce using rule 35 (statement -> identifier COLON unlabeled_statement .)
+    WHILE           reduce using rule 35 (statement -> identifier COLON unlabeled_statement .)
+    IF              reduce using rule 35 (statement -> identifier COLON unlabeled_statement .)
+    RETURN          reduce using rule 35 (statement -> identifier COLON unlabeled_statement .)
+    GOTO            reduce using rule 35 (statement -> identifier COLON unlabeled_statement .)
+    RBRACE          reduce using rule 35 (statement -> identifier COLON unlabeled_statement .)
+
+
+state 138
+
+    (91) function_call -> identifier LPAREN expression_list . RPAREN
+    RPAREN          shift and go to state 172
+
+
+state 139
+
+    (93) expression_list -> expression . expression_list_n
+    (94) expression_list_n -> .
+    (95) expression_list_n -> . COMMA expression_list
+    RPAREN          reduce using rule 94 (expression_list_n -> .)
+    COMMA           shift and go to state 174
+
+    expression_list_n              shift and go to state 173
+
+state 140
+
+    (66) variable -> ID LBRACKET expression . RBRACKET
+    RBRACKET        shift and go to state 175
+
+
+state 141
+
+    (51) repetitive -> WHILE expression compound .
+    LBRACE          reduce using rule 51 (repetitive -> WHILE expression compound .)
+    WRITE           reduce using rule 51 (repetitive -> WHILE expression compound .)
+    READ            reduce using rule 51 (repetitive -> WHILE expression compound .)
+    FALSE           reduce using rule 51 (repetitive -> WHILE expression compound .)
+    TRUE            reduce using rule 51 (repetitive -> WHILE expression compound .)
+    BOOLEAN         reduce using rule 51 (repetitive -> WHILE expression compound .)
+    INTEGER         reduce using rule 51 (repetitive -> WHILE expression compound .)
+    ID              reduce using rule 51 (repetitive -> WHILE expression compound .)
+    SCOLON          reduce using rule 51 (repetitive -> WHILE expression compound .)
+    WHILE           reduce using rule 51 (repetitive -> WHILE expression compound .)
+    IF              reduce using rule 51 (repetitive -> WHILE expression compound .)
+    RETURN          reduce using rule 51 (repetitive -> WHILE expression compound .)
+    GOTO            reduce using rule 51 (repetitive -> WHILE expression compound .)
+    RBRACE          reduce using rule 51 (repetitive -> WHILE expression compound .)
+
+
+state 142
+
+    (97) expression -> simple_expression relational_operator . simple_expression
+    (100) simple_expression -> . term simple_expression_n
+    (101) simple_expression -> . MINUS term simple_expression_n
+    (102) simple_expression -> . PLUS term simple_expression_n
+    (89) term -> . factor mulop_term
+    (70) factor -> . function_call
+    (71) factor -> . integer
+    (72) factor -> . variable
+    (73) factor -> . NOT factor
+    (74) factor -> . LPAREN expression RPAREN
+    (91) function_call -> . identifier LPAREN expression_list RPAREN
+    (110) integer -> . NUMBER
+    (66) variable -> . ID LBRACKET expression RBRACKET
+    (67) variable -> . ID
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    MINUS           shift and go to state 105
+    PLUS            shift and go to state 106
+    NOT             shift and go to state 111
+    LPAREN          shift and go to state 112
+    NUMBER          shift and go to state 113
+    ID              shift and go to state 96
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+
+    simple_expression              shift and go to state 176
+    term                           shift and go to state 104
+    factor                         shift and go to state 107
+    function_call                  shift and go to state 108
+    integer                        shift and go to state 109
+    variable                       shift and go to state 110
+    identifier                     shift and go to state 95
+
+state 143
+
+    (81) relational_operator -> GREATER .
+    MINUS           reduce using rule 81 (relational_operator -> GREATER .)
+    PLUS            reduce using rule 81 (relational_operator -> GREATER .)
+    NOT             reduce using rule 81 (relational_operator -> GREATER .)
+    LPAREN          reduce using rule 81 (relational_operator -> GREATER .)
+    NUMBER          reduce using rule 81 (relational_operator -> GREATER .)
+    ID              reduce using rule 81 (relational_operator -> GREATER .)
+    WRITE           reduce using rule 81 (relational_operator -> GREATER .)
+    READ            reduce using rule 81 (relational_operator -> GREATER .)
+    FALSE           reduce using rule 81 (relational_operator -> GREATER .)
+    TRUE            reduce using rule 81 (relational_operator -> GREATER .)
+    BOOLEAN         reduce using rule 81 (relational_operator -> GREATER .)
+    INTEGER         reduce using rule 81 (relational_operator -> GREATER .)
+
+
+state 144
+
+    (82) relational_operator -> GEQ .
+    MINUS           reduce using rule 82 (relational_operator -> GEQ .)
+    PLUS            reduce using rule 82 (relational_operator -> GEQ .)
+    NOT             reduce using rule 82 (relational_operator -> GEQ .)
+    LPAREN          reduce using rule 82 (relational_operator -> GEQ .)
+    NUMBER          reduce using rule 82 (relational_operator -> GEQ .)
+    ID              reduce using rule 82 (relational_operator -> GEQ .)
+    WRITE           reduce using rule 82 (relational_operator -> GEQ .)
+    READ            reduce using rule 82 (relational_operator -> GEQ .)
+    FALSE           reduce using rule 82 (relational_operator -> GEQ .)
+    TRUE            reduce using rule 82 (relational_operator -> GEQ .)
+    BOOLEAN         reduce using rule 82 (relational_operator -> GEQ .)
+    INTEGER         reduce using rule 82 (relational_operator -> GEQ .)
+
+
+state 145
+
+    (83) relational_operator -> LEQ .
+    MINUS           reduce using rule 83 (relational_operator -> LEQ .)
+    PLUS            reduce using rule 83 (relational_operator -> LEQ .)
+    NOT             reduce using rule 83 (relational_operator -> LEQ .)
+    LPAREN          reduce using rule 83 (relational_operator -> LEQ .)
+    NUMBER          reduce using rule 83 (relational_operator -> LEQ .)
+    ID              reduce using rule 83 (relational_operator -> LEQ .)
+    WRITE           reduce using rule 83 (relational_operator -> LEQ .)
+    READ            reduce using rule 83 (relational_operator -> LEQ .)
+    FALSE           reduce using rule 83 (relational_operator -> LEQ .)
+    TRUE            reduce using rule 83 (relational_operator -> LEQ .)
+    BOOLEAN         reduce using rule 83 (relational_operator -> LEQ .)
+    INTEGER         reduce using rule 83 (relational_operator -> LEQ .)
+
+
+state 146
+
+    (84) relational_operator -> LESS .
+    MINUS           reduce using rule 84 (relational_operator -> LESS .)
+    PLUS            reduce using rule 84 (relational_operator -> LESS .)
+    NOT             reduce using rule 84 (relational_operator -> LESS .)
+    LPAREN          reduce using rule 84 (relational_operator -> LESS .)
+    NUMBER          reduce using rule 84 (relational_operator -> LESS .)
+    ID              reduce using rule 84 (relational_operator -> LESS .)
+    WRITE           reduce using rule 84 (relational_operator -> LESS .)
+    READ            reduce using rule 84 (relational_operator -> LESS .)
+    FALSE           reduce using rule 84 (relational_operator -> LESS .)
+    TRUE            reduce using rule 84 (relational_operator -> LESS .)
+    BOOLEAN         reduce using rule 84 (relational_operator -> LESS .)
+    INTEGER         reduce using rule 84 (relational_operator -> LESS .)
+
+
+state 147
+
+    (85) relational_operator -> NEQ .
+    MINUS           reduce using rule 85 (relational_operator -> NEQ .)
+    PLUS            reduce using rule 85 (relational_operator -> NEQ .)
+    NOT             reduce using rule 85 (relational_operator -> NEQ .)
+    LPAREN          reduce using rule 85 (relational_operator -> NEQ .)
+    NUMBER          reduce using rule 85 (relational_operator -> NEQ .)
+    ID              reduce using rule 85 (relational_operator -> NEQ .)
+    WRITE           reduce using rule 85 (relational_operator -> NEQ .)
+    READ            reduce using rule 85 (relational_operator -> NEQ .)
+    FALSE           reduce using rule 85 (relational_operator -> NEQ .)
+    TRUE            reduce using rule 85 (relational_operator -> NEQ .)
+    BOOLEAN         reduce using rule 85 (relational_operator -> NEQ .)
+    INTEGER         reduce using rule 85 (relational_operator -> NEQ .)
+
+
+state 148
+
+    (86) relational_operator -> EQUAL .
+    MINUS           reduce using rule 86 (relational_operator -> EQUAL .)
+    PLUS            reduce using rule 86 (relational_operator -> EQUAL .)
+    NOT             reduce using rule 86 (relational_operator -> EQUAL .)
+    LPAREN          reduce using rule 86 (relational_operator -> EQUAL .)
+    NUMBER          reduce using rule 86 (relational_operator -> EQUAL .)
+    ID              reduce using rule 86 (relational_operator -> EQUAL .)
+    WRITE           reduce using rule 86 (relational_operator -> EQUAL .)
+    READ            reduce using rule 86 (relational_operator -> EQUAL .)
+    FALSE           reduce using rule 86 (relational_operator -> EQUAL .)
+    TRUE            reduce using rule 86 (relational_operator -> EQUAL .)
+    BOOLEAN         reduce using rule 86 (relational_operator -> EQUAL .)
+    INTEGER         reduce using rule 86 (relational_operator -> EQUAL .)
+
+
+state 149
+
+    (100) simple_expression -> term simple_expression_n .
+    GREATER         reduce using rule 100 (simple_expression -> term simple_expression_n .)
+    GEQ             reduce using rule 100 (simple_expression -> term simple_expression_n .)
+    LEQ             reduce using rule 100 (simple_expression -> term simple_expression_n .)
+    LESS            reduce using rule 100 (simple_expression -> term simple_expression_n .)
+    NEQ             reduce using rule 100 (simple_expression -> term simple_expression_n .)
+    EQUAL           reduce using rule 100 (simple_expression -> term simple_expression_n .)
+    LBRACE          reduce using rule 100 (simple_expression -> term simple_expression_n .)
+    SCOLON          reduce using rule 100 (simple_expression -> term simple_expression_n .)
+    COMMA           reduce using rule 100 (simple_expression -> term simple_expression_n .)
+    RPAREN          reduce using rule 100 (simple_expression -> term simple_expression_n .)
+    RBRACKET        reduce using rule 100 (simple_expression -> term simple_expression_n .)
+
+
+state 150
+
+    (98) simple_expression_n -> additive_operator . term simple_expression_n
+    (89) term -> . factor mulop_term
+    (70) factor -> . function_call
+    (71) factor -> . integer
+    (72) factor -> . variable
+    (73) factor -> . NOT factor
+    (74) factor -> . LPAREN expression RPAREN
+    (91) function_call -> . identifier LPAREN expression_list RPAREN
+    (110) integer -> . NUMBER
+    (66) variable -> . ID LBRACKET expression RBRACKET
+    (67) variable -> . ID
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    NOT             shift and go to state 111
+    LPAREN          shift and go to state 112
+    NUMBER          shift and go to state 113
+    ID              shift and go to state 96
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+
+    term                           shift and go to state 177
+    factor                         shift and go to state 107
+    function_call                  shift and go to state 108
+    integer                        shift and go to state 109
+    variable                       shift and go to state 110
+    identifier                     shift and go to state 95
+
+state 151
+
+    (75) additive_operator -> OR .
+    NOT             reduce using rule 75 (additive_operator -> OR .)
+    LPAREN          reduce using rule 75 (additive_operator -> OR .)
+    NUMBER          reduce using rule 75 (additive_operator -> OR .)
+    ID              reduce using rule 75 (additive_operator -> OR .)
+    WRITE           reduce using rule 75 (additive_operator -> OR .)
+    READ            reduce using rule 75 (additive_operator -> OR .)
+    FALSE           reduce using rule 75 (additive_operator -> OR .)
+    TRUE            reduce using rule 75 (additive_operator -> OR .)
+    BOOLEAN         reduce using rule 75 (additive_operator -> OR .)
+    INTEGER         reduce using rule 75 (additive_operator -> OR .)
+
+
+state 152
+
+    (76) additive_operator -> MINUS .
+    NOT             reduce using rule 76 (additive_operator -> MINUS .)
+    LPAREN          reduce using rule 76 (additive_operator -> MINUS .)
+    NUMBER          reduce using rule 76 (additive_operator -> MINUS .)
+    ID              reduce using rule 76 (additive_operator -> MINUS .)
+    WRITE           reduce using rule 76 (additive_operator -> MINUS .)
+    READ            reduce using rule 76 (additive_operator -> MINUS .)
+    FALSE           reduce using rule 76 (additive_operator -> MINUS .)
+    TRUE            reduce using rule 76 (additive_operator -> MINUS .)
+    BOOLEAN         reduce using rule 76 (additive_operator -> MINUS .)
+    INTEGER         reduce using rule 76 (additive_operator -> MINUS .)
+
+
+state 153
+
+    (77) additive_operator -> PLUS .
+    NOT             reduce using rule 77 (additive_operator -> PLUS .)
+    LPAREN          reduce using rule 77 (additive_operator -> PLUS .)
+    NUMBER          reduce using rule 77 (additive_operator -> PLUS .)
+    ID              reduce using rule 77 (additive_operator -> PLUS .)
+    WRITE           reduce using rule 77 (additive_operator -> PLUS .)
+    READ            reduce using rule 77 (additive_operator -> PLUS .)
+    FALSE           reduce using rule 77 (additive_operator -> PLUS .)
+    TRUE            reduce using rule 77 (additive_operator -> PLUS .)
+    BOOLEAN         reduce using rule 77 (additive_operator -> PLUS .)
+    INTEGER         reduce using rule 77 (additive_operator -> PLUS .)
+
+
+state 154
+
+    (101) simple_expression -> MINUS term . simple_expression_n
+    (98) simple_expression_n -> . additive_operator term simple_expression_n
+    (99) simple_expression_n -> .
+    (75) additive_operator -> . OR
+    (76) additive_operator -> . MINUS
+    (77) additive_operator -> . PLUS
+    GREATER         reduce using rule 99 (simple_expression_n -> .)
+    GEQ             reduce using rule 99 (simple_expression_n -> .)
+    LEQ             reduce using rule 99 (simple_expression_n -> .)
+    LESS            reduce using rule 99 (simple_expression_n -> .)
+    NEQ             reduce using rule 99 (simple_expression_n -> .)
+    EQUAL           reduce using rule 99 (simple_expression_n -> .)
+    LBRACE          reduce using rule 99 (simple_expression_n -> .)
+    SCOLON          reduce using rule 99 (simple_expression_n -> .)
+    COMMA           reduce using rule 99 (simple_expression_n -> .)
+    RPAREN          reduce using rule 99 (simple_expression_n -> .)
+    RBRACKET        reduce using rule 99 (simple_expression_n -> .)
+    OR              shift and go to state 151
+    MINUS           shift and go to state 152
+    PLUS            shift and go to state 153
+
+    simple_expression_n            shift and go to state 178
+    additive_operator              shift and go to state 150
+
+state 155
+
+    (102) simple_expression -> PLUS term . simple_expression_n
+    (98) simple_expression_n -> . additive_operator term simple_expression_n
+    (99) simple_expression_n -> .
+    (75) additive_operator -> . OR
+    (76) additive_operator -> . MINUS
+    (77) additive_operator -> . PLUS
+    GREATER         reduce using rule 99 (simple_expression_n -> .)
+    GEQ             reduce using rule 99 (simple_expression_n -> .)
+    LEQ             reduce using rule 99 (simple_expression_n -> .)
+    LESS            reduce using rule 99 (simple_expression_n -> .)
+    NEQ             reduce using rule 99 (simple_expression_n -> .)
+    EQUAL           reduce using rule 99 (simple_expression_n -> .)
+    LBRACE          reduce using rule 99 (simple_expression_n -> .)
+    SCOLON          reduce using rule 99 (simple_expression_n -> .)
+    COMMA           reduce using rule 99 (simple_expression_n -> .)
+    RPAREN          reduce using rule 99 (simple_expression_n -> .)
+    RBRACKET        reduce using rule 99 (simple_expression_n -> .)
+    OR              shift and go to state 151
+    MINUS           shift and go to state 152
+    PLUS            shift and go to state 153
+
+    simple_expression_n            shift and go to state 179
+    additive_operator              shift and go to state 150
+
+state 156
+
+    (89) term -> factor mulop_term .
+    OR              reduce using rule 89 (term -> factor mulop_term .)
+    MINUS           reduce using rule 89 (term -> factor mulop_term .)
+    PLUS            reduce using rule 89 (term -> factor mulop_term .)
+    GREATER         reduce using rule 89 (term -> factor mulop_term .)
+    GEQ             reduce using rule 89 (term -> factor mulop_term .)
+    LEQ             reduce using rule 89 (term -> factor mulop_term .)
+    LESS            reduce using rule 89 (term -> factor mulop_term .)
+    NEQ             reduce using rule 89 (term -> factor mulop_term .)
+    EQUAL           reduce using rule 89 (term -> factor mulop_term .)
+    LBRACE          reduce using rule 89 (term -> factor mulop_term .)
+    SCOLON          reduce using rule 89 (term -> factor mulop_term .)
+    COMMA           reduce using rule 89 (term -> factor mulop_term .)
+    RPAREN          reduce using rule 89 (term -> factor mulop_term .)
+    RBRACKET        reduce using rule 89 (term -> factor mulop_term .)
+
+
+state 157
+
+    (87) mulop_term -> multiplicative_operator . factor mulop_term
+    (70) factor -> . function_call
+    (71) factor -> . integer
+    (72) factor -> . variable
+    (73) factor -> . NOT factor
+    (74) factor -> . LPAREN expression RPAREN
+    (91) function_call -> . identifier LPAREN expression_list RPAREN
+    (110) integer -> . NUMBER
+    (66) variable -> . ID LBRACKET expression RBRACKET
+    (67) variable -> . ID
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    NOT             shift and go to state 111
+    LPAREN          shift and go to state 112
+    NUMBER          shift and go to state 113
+    ID              shift and go to state 96
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+
+    factor                         shift and go to state 180
+    function_call                  shift and go to state 108
+    integer                        shift and go to state 109
+    variable                       shift and go to state 110
+    identifier                     shift and go to state 95
+
+state 158
+
+    (78) multiplicative_operator -> AND .
+    NOT             reduce using rule 78 (multiplicative_operator -> AND .)
+    LPAREN          reduce using rule 78 (multiplicative_operator -> AND .)
+    NUMBER          reduce using rule 78 (multiplicative_operator -> AND .)
+    ID              reduce using rule 78 (multiplicative_operator -> AND .)
+    WRITE           reduce using rule 78 (multiplicative_operator -> AND .)
+    READ            reduce using rule 78 (multiplicative_operator -> AND .)
+    FALSE           reduce using rule 78 (multiplicative_operator -> AND .)
+    TRUE            reduce using rule 78 (multiplicative_operator -> AND .)
+    BOOLEAN         reduce using rule 78 (multiplicative_operator -> AND .)
+    INTEGER         reduce using rule 78 (multiplicative_operator -> AND .)
+
+
+state 159
+
+    (79) multiplicative_operator -> DIVIDE .
+    NOT             reduce using rule 79 (multiplicative_operator -> DIVIDE .)
+    LPAREN          reduce using rule 79 (multiplicative_operator -> DIVIDE .)
+    NUMBER          reduce using rule 79 (multiplicative_operator -> DIVIDE .)
+    ID              reduce using rule 79 (multiplicative_operator -> DIVIDE .)
+    WRITE           reduce using rule 79 (multiplicative_operator -> DIVIDE .)
+    READ            reduce using rule 79 (multiplicative_operator -> DIVIDE .)
+    FALSE           reduce using rule 79 (multiplicative_operator -> DIVIDE .)
+    TRUE            reduce using rule 79 (multiplicative_operator -> DIVIDE .)
+    BOOLEAN         reduce using rule 79 (multiplicative_operator -> DIVIDE .)
+    INTEGER         reduce using rule 79 (multiplicative_operator -> DIVIDE .)
+
+
+state 160
+
+    (80) multiplicative_operator -> TIMES .
+    NOT             reduce using rule 80 (multiplicative_operator -> TIMES .)
+    LPAREN          reduce using rule 80 (multiplicative_operator -> TIMES .)
+    NUMBER          reduce using rule 80 (multiplicative_operator -> TIMES .)
+    ID              reduce using rule 80 (multiplicative_operator -> TIMES .)
+    WRITE           reduce using rule 80 (multiplicative_operator -> TIMES .)
+    READ            reduce using rule 80 (multiplicative_operator -> TIMES .)
+    FALSE           reduce using rule 80 (multiplicative_operator -> TIMES .)
+    TRUE            reduce using rule 80 (multiplicative_operator -> TIMES .)
+    BOOLEAN         reduce using rule 80 (multiplicative_operator -> TIMES .)
+    INTEGER         reduce using rule 80 (multiplicative_operator -> TIMES .)
+
+
+state 161
+
+    (73) factor -> NOT factor .
+    AND             reduce using rule 73 (factor -> NOT factor .)
+    DIVIDE          reduce using rule 73 (factor -> NOT factor .)
+    TIMES           reduce using rule 73 (factor -> NOT factor .)
+    OR              reduce using rule 73 (factor -> NOT factor .)
+    MINUS           reduce using rule 73 (factor -> NOT factor .)
+    PLUS            reduce using rule 73 (factor -> NOT factor .)
+    GREATER         reduce using rule 73 (factor -> NOT factor .)
+    GEQ             reduce using rule 73 (factor -> NOT factor .)
+    LEQ             reduce using rule 73 (factor -> NOT factor .)
+    LESS            reduce using rule 73 (factor -> NOT factor .)
+    NEQ             reduce using rule 73 (factor -> NOT factor .)
+    EQUAL           reduce using rule 73 (factor -> NOT factor .)
+    LBRACE          reduce using rule 73 (factor -> NOT factor .)
+    SCOLON          reduce using rule 73 (factor -> NOT factor .)
+    COMMA           reduce using rule 73 (factor -> NOT factor .)
+    RPAREN          reduce using rule 73 (factor -> NOT factor .)
+    RBRACKET        reduce using rule 73 (factor -> NOT factor .)
+
+
+state 162
+
+    (74) factor -> LPAREN expression . RPAREN
+    RPAREN          shift and go to state 181
+
+
+state 163
+
+    (49) conditional -> IF LPAREN expression . RPAREN compound
+    (50) conditional -> IF LPAREN expression . RPAREN compound ELSE compound
+    RPAREN          shift and go to state 182
+
+
+state 164
+
+    (47) return_rule -> RETURN expression SCOLON .
+    LBRACE          reduce using rule 47 (return_rule -> RETURN expression SCOLON .)
+    WRITE           reduce using rule 47 (return_rule -> RETURN expression SCOLON .)
+    READ            reduce using rule 47 (return_rule -> RETURN expression SCOLON .)
+    FALSE           reduce using rule 47 (return_rule -> RETURN expression SCOLON .)
+    TRUE            reduce using rule 47 (return_rule -> RETURN expression SCOLON .)
+    BOOLEAN         reduce using rule 47 (return_rule -> RETURN expression SCOLON .)
+    INTEGER         reduce using rule 47 (return_rule -> RETURN expression SCOLON .)
+    ID              reduce using rule 47 (return_rule -> RETURN expression SCOLON .)
+    SCOLON          reduce using rule 47 (return_rule -> RETURN expression SCOLON .)
+    WHILE           reduce using rule 47 (return_rule -> RETURN expression SCOLON .)
+    IF              reduce using rule 47 (return_rule -> RETURN expression SCOLON .)
+    RETURN          reduce using rule 47 (return_rule -> RETURN expression SCOLON .)
+    GOTO            reduce using rule 47 (return_rule -> RETURN expression SCOLON .)
+    RBRACE          reduce using rule 47 (return_rule -> RETURN expression SCOLON .)
+
+
+state 165
+
+    (45) goto -> GOTO identifier SCOLON .
+    LBRACE          reduce using rule 45 (goto -> GOTO identifier SCOLON .)
+    WRITE           reduce using rule 45 (goto -> GOTO identifier SCOLON .)
+    READ            reduce using rule 45 (goto -> GOTO identifier SCOLON .)
+    FALSE           reduce using rule 45 (goto -> GOTO identifier SCOLON .)
+    TRUE            reduce using rule 45 (goto -> GOTO identifier SCOLON .)
+    BOOLEAN         reduce using rule 45 (goto -> GOTO identifier SCOLON .)
+    INTEGER         reduce using rule 45 (goto -> GOTO identifier SCOLON .)
+    ID              reduce using rule 45 (goto -> GOTO identifier SCOLON .)
+    SCOLON          reduce using rule 45 (goto -> GOTO identifier SCOLON .)
+    WHILE           reduce using rule 45 (goto -> GOTO identifier SCOLON .)
+    IF              reduce using rule 45 (goto -> GOTO identifier SCOLON .)
+    RETURN          reduce using rule 45 (goto -> GOTO identifier SCOLON .)
+    GOTO            reduce using rule 45 (goto -> GOTO identifier SCOLON .)
+    RBRACE          reduce using rule 45 (goto -> GOTO identifier SCOLON .)
+
+
+state 166
+
+    (53) assignment -> variable ASSIGN expression . SCOLON
+    SCOLON          shift and go to state 183
+
+
+state 167
+
+    (68) vartype -> identifier .
+    SCOLON          reduce using rule 68 (vartype -> identifier .)
+
+
+state 168
+
+    (27) types_n -> identifier ASSIGN vartype . SCOLON
+    (28) types_n -> identifier ASSIGN vartype . SCOLON types_n
+    SCOLON          shift and go to state 184
+
+
+state 169
+
+    (24) variables_n -> identifier_list COLON vartype . SCOLON
+    (25) variables_n -> identifier_list COLON vartype . SCOLON variables_n
+    SCOLON          shift and go to state 185
+
+
+state 170
+
+    (60) expression_parameter -> VAR identifier_list COLON identifier .
+    SCOLON          reduce using rule 60 (expression_parameter -> VAR identifier_list COLON identifier .)
+    RPAREN          reduce using rule 60 (expression_parameter -> VAR identifier_list COLON identifier .)
+
+
+state 171
+
+    (19) block -> labels types variables functions body .
+    $end            reduce using rule 19 (block -> labels types variables functions body .)
+    VOID            reduce using rule 19 (block -> labels types variables functions body .)
+    WRITE           reduce using rule 19 (block -> labels types variables functions body .)
+    READ            reduce using rule 19 (block -> labels types variables functions body .)
+    FALSE           reduce using rule 19 (block -> labels types variables functions body .)
+    TRUE            reduce using rule 19 (block -> labels types variables functions body .)
+    BOOLEAN         reduce using rule 19 (block -> labels types variables functions body .)
+    INTEGER         reduce using rule 19 (block -> labels types variables functions body .)
+    ID              reduce using rule 19 (block -> labels types variables functions body .)
+    LBRACE          reduce using rule 19 (block -> labels types variables functions body .)
+
+
+state 172
+
+    (91) function_call -> identifier LPAREN expression_list RPAREN .
+    LBRACE          reduce using rule 91 (function_call -> identifier LPAREN expression_list RPAREN .)
+    WRITE           reduce using rule 91 (function_call -> identifier LPAREN expression_list RPAREN .)
+    READ            reduce using rule 91 (function_call -> identifier LPAREN expression_list RPAREN .)
+    FALSE           reduce using rule 91 (function_call -> identifier LPAREN expression_list RPAREN .)
+    TRUE            reduce using rule 91 (function_call -> identifier LPAREN expression_list RPAREN .)
+    BOOLEAN         reduce using rule 91 (function_call -> identifier LPAREN expression_list RPAREN .)
+    INTEGER         reduce using rule 91 (function_call -> identifier LPAREN expression_list RPAREN .)
+    ID              reduce using rule 91 (function_call -> identifier LPAREN expression_list RPAREN .)
+    SCOLON          reduce using rule 91 (function_call -> identifier LPAREN expression_list RPAREN .)
+    WHILE           reduce using rule 91 (function_call -> identifier LPAREN expression_list RPAREN .)
+    IF              reduce using rule 91 (function_call -> identifier LPAREN expression_list RPAREN .)
+    RETURN          reduce using rule 91 (function_call -> identifier LPAREN expression_list RPAREN .)
+    GOTO            reduce using rule 91 (function_call -> identifier LPAREN expression_list RPAREN .)
+    RBRACE          reduce using rule 91 (function_call -> identifier LPAREN expression_list RPAREN .)
+    AND             reduce using rule 91 (function_call -> identifier LPAREN expression_list RPAREN .)
+    DIVIDE          reduce using rule 91 (function_call -> identifier LPAREN expression_list RPAREN .)
+    TIMES           reduce using rule 91 (function_call -> identifier LPAREN expression_list RPAREN .)
+    OR              reduce using rule 91 (function_call -> identifier LPAREN expression_list RPAREN .)
+    MINUS           reduce using rule 91 (function_call -> identifier LPAREN expression_list RPAREN .)
+    PLUS            reduce using rule 91 (function_call -> identifier LPAREN expression_list RPAREN .)
+    GREATER         reduce using rule 91 (function_call -> identifier LPAREN expression_list RPAREN .)
+    GEQ             reduce using rule 91 (function_call -> identifier LPAREN expression_list RPAREN .)
+    LEQ             reduce using rule 91 (function_call -> identifier LPAREN expression_list RPAREN .)
+    LESS            reduce using rule 91 (function_call -> identifier LPAREN expression_list RPAREN .)
+    NEQ             reduce using rule 91 (function_call -> identifier LPAREN expression_list RPAREN .)
+    EQUAL           reduce using rule 91 (function_call -> identifier LPAREN expression_list RPAREN .)
+    COMMA           reduce using rule 91 (function_call -> identifier LPAREN expression_list RPAREN .)
+    RPAREN          reduce using rule 91 (function_call -> identifier LPAREN expression_list RPAREN .)
+    RBRACKET        reduce using rule 91 (function_call -> identifier LPAREN expression_list RPAREN .)
+
+
+state 173
+
+    (93) expression_list -> expression expression_list_n .
+    RPAREN          reduce using rule 93 (expression_list -> expression expression_list_n .)
+
+
+state 174
+
+    (95) expression_list_n -> COMMA . expression_list
+    (92) expression_list -> .
+    (93) expression_list -> . expression expression_list_n
+    (96) expression -> . simple_expression
+    (97) expression -> . simple_expression relational_operator simple_expression
+    (100) simple_expression -> . term simple_expression_n
+    (101) simple_expression -> . MINUS term simple_expression_n
+    (102) simple_expression -> . PLUS term simple_expression_n
+    (89) term -> . factor mulop_term
+    (70) factor -> . function_call
+    (71) factor -> . integer
+    (72) factor -> . variable
+    (73) factor -> . NOT factor
+    (74) factor -> . LPAREN expression RPAREN
+    (91) function_call -> . identifier LPAREN expression_list RPAREN
+    (110) integer -> . NUMBER
+    (66) variable -> . ID LBRACKET expression RBRACKET
+    (67) variable -> . ID
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    RPAREN          reduce using rule 92 (expression_list -> .)
+    MINUS           shift and go to state 105
+    PLUS            shift and go to state 106
+    NOT             shift and go to state 111
+    LPAREN          shift and go to state 112
+    NUMBER          shift and go to state 113
+    ID              shift and go to state 96
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+
+    expression_list                shift and go to state 186
+    expression                     shift and go to state 139
+    simple_expression              shift and go to state 103
+    term                           shift and go to state 104
+    factor                         shift and go to state 107
+    function_call                  shift and go to state 108
+    integer                        shift and go to state 109
+    variable                       shift and go to state 110
+    identifier                     shift and go to state 95
+
+state 175
+
+    (66) variable -> ID LBRACKET expression RBRACKET .
+    ASSIGN          reduce using rule 66 (variable -> ID LBRACKET expression RBRACKET .)
+    AND             reduce using rule 66 (variable -> ID LBRACKET expression RBRACKET .)
+    DIVIDE          reduce using rule 66 (variable -> ID LBRACKET expression RBRACKET .)
+    TIMES           reduce using rule 66 (variable -> ID LBRACKET expression RBRACKET .)
+    OR              reduce using rule 66 (variable -> ID LBRACKET expression RBRACKET .)
+    MINUS           reduce using rule 66 (variable -> ID LBRACKET expression RBRACKET .)
+    PLUS            reduce using rule 66 (variable -> ID LBRACKET expression RBRACKET .)
+    GREATER         reduce using rule 66 (variable -> ID LBRACKET expression RBRACKET .)
+    GEQ             reduce using rule 66 (variable -> ID LBRACKET expression RBRACKET .)
+    LEQ             reduce using rule 66 (variable -> ID LBRACKET expression RBRACKET .)
+    LESS            reduce using rule 66 (variable -> ID LBRACKET expression RBRACKET .)
+    NEQ             reduce using rule 66 (variable -> ID LBRACKET expression RBRACKET .)
+    EQUAL           reduce using rule 66 (variable -> ID LBRACKET expression RBRACKET .)
+    LBRACE          reduce using rule 66 (variable -> ID LBRACKET expression RBRACKET .)
+    SCOLON          reduce using rule 66 (variable -> ID LBRACKET expression RBRACKET .)
+    COMMA           reduce using rule 66 (variable -> ID LBRACKET expression RBRACKET .)
+    RPAREN          reduce using rule 66 (variable -> ID LBRACKET expression RBRACKET .)
+    RBRACKET        reduce using rule 66 (variable -> ID LBRACKET expression RBRACKET .)
+
+
+state 176
+
+    (97) expression -> simple_expression relational_operator simple_expression .
+    LBRACE          reduce using rule 97 (expression -> simple_expression relational_operator simple_expression .)
+    SCOLON          reduce using rule 97 (expression -> simple_expression relational_operator simple_expression .)
+    COMMA           reduce using rule 97 (expression -> simple_expression relational_operator simple_expression .)
+    RPAREN          reduce using rule 97 (expression -> simple_expression relational_operator simple_expression .)
+    RBRACKET        reduce using rule 97 (expression -> simple_expression relational_operator simple_expression .)
+
+
+state 177
+
+    (98) simple_expression_n -> additive_operator term . simple_expression_n
+    (98) simple_expression_n -> . additive_operator term simple_expression_n
+    (99) simple_expression_n -> .
+    (75) additive_operator -> . OR
+    (76) additive_operator -> . MINUS
+    (77) additive_operator -> . PLUS
+    GREATER         reduce using rule 99 (simple_expression_n -> .)
+    GEQ             reduce using rule 99 (simple_expression_n -> .)
+    LEQ             reduce using rule 99 (simple_expression_n -> .)
+    LESS            reduce using rule 99 (simple_expression_n -> .)
+    NEQ             reduce using rule 99 (simple_expression_n -> .)
+    EQUAL           reduce using rule 99 (simple_expression_n -> .)
+    LBRACE          reduce using rule 99 (simple_expression_n -> .)
+    SCOLON          reduce using rule 99 (simple_expression_n -> .)
+    COMMA           reduce using rule 99 (simple_expression_n -> .)
+    RPAREN          reduce using rule 99 (simple_expression_n -> .)
+    RBRACKET        reduce using rule 99 (simple_expression_n -> .)
+    OR              shift and go to state 151
+    MINUS           shift and go to state 152
+    PLUS            shift and go to state 153
+
+    additive_operator              shift and go to state 150
+    simple_expression_n            shift and go to state 187
+
+state 178
+
+    (101) simple_expression -> MINUS term simple_expression_n .
+    GREATER         reduce using rule 101 (simple_expression -> MINUS term simple_expression_n .)
+    GEQ             reduce using rule 101 (simple_expression -> MINUS term simple_expression_n .)
+    LEQ             reduce using rule 101 (simple_expression -> MINUS term simple_expression_n .)
+    LESS            reduce using rule 101 (simple_expression -> MINUS term simple_expression_n .)
+    NEQ             reduce using rule 101 (simple_expression -> MINUS term simple_expression_n .)
+    EQUAL           reduce using rule 101 (simple_expression -> MINUS term simple_expression_n .)
+    LBRACE          reduce using rule 101 (simple_expression -> MINUS term simple_expression_n .)
+    SCOLON          reduce using rule 101 (simple_expression -> MINUS term simple_expression_n .)
+    COMMA           reduce using rule 101 (simple_expression -> MINUS term simple_expression_n .)
+    RPAREN          reduce using rule 101 (simple_expression -> MINUS term simple_expression_n .)
+    RBRACKET        reduce using rule 101 (simple_expression -> MINUS term simple_expression_n .)
+
+
+state 179
+
+    (102) simple_expression -> PLUS term simple_expression_n .
+    GREATER         reduce using rule 102 (simple_expression -> PLUS term simple_expression_n .)
+    GEQ             reduce using rule 102 (simple_expression -> PLUS term simple_expression_n .)
+    LEQ             reduce using rule 102 (simple_expression -> PLUS term simple_expression_n .)
+    LESS            reduce using rule 102 (simple_expression -> PLUS term simple_expression_n .)
+    NEQ             reduce using rule 102 (simple_expression -> PLUS term simple_expression_n .)
+    EQUAL           reduce using rule 102 (simple_expression -> PLUS term simple_expression_n .)
+    LBRACE          reduce using rule 102 (simple_expression -> PLUS term simple_expression_n .)
+    SCOLON          reduce using rule 102 (simple_expression -> PLUS term simple_expression_n .)
+    COMMA           reduce using rule 102 (simple_expression -> PLUS term simple_expression_n .)
+    RPAREN          reduce using rule 102 (simple_expression -> PLUS term simple_expression_n .)
+    RBRACKET        reduce using rule 102 (simple_expression -> PLUS term simple_expression_n .)
+
+
+state 180
+
+    (87) mulop_term -> multiplicative_operator factor . mulop_term
+    (87) mulop_term -> . multiplicative_operator factor mulop_term
+    (88) mulop_term -> .
+    (78) multiplicative_operator -> . AND
+    (79) multiplicative_operator -> . DIVIDE
+    (80) multiplicative_operator -> . TIMES
+    OR              reduce using rule 88 (mulop_term -> .)
+    MINUS           reduce using rule 88 (mulop_term -> .)
+    PLUS            reduce using rule 88 (mulop_term -> .)
+    GREATER         reduce using rule 88 (mulop_term -> .)
+    GEQ             reduce using rule 88 (mulop_term -> .)
+    LEQ             reduce using rule 88 (mulop_term -> .)
+    LESS            reduce using rule 88 (mulop_term -> .)
+    NEQ             reduce using rule 88 (mulop_term -> .)
+    EQUAL           reduce using rule 88 (mulop_term -> .)
+    LBRACE          reduce using rule 88 (mulop_term -> .)
+    SCOLON          reduce using rule 88 (mulop_term -> .)
+    COMMA           reduce using rule 88 (mulop_term -> .)
+    RPAREN          reduce using rule 88 (mulop_term -> .)
+    RBRACKET        reduce using rule 88 (mulop_term -> .)
+    AND             shift and go to state 158
+    DIVIDE          shift and go to state 159
+    TIMES           shift and go to state 160
+
+    multiplicative_operator        shift and go to state 157
+    mulop_term                     shift and go to state 188
+
+state 181
+
+    (74) factor -> LPAREN expression RPAREN .
+    AND             reduce using rule 74 (factor -> LPAREN expression RPAREN .)
+    DIVIDE          reduce using rule 74 (factor -> LPAREN expression RPAREN .)
+    TIMES           reduce using rule 74 (factor -> LPAREN expression RPAREN .)
+    OR              reduce using rule 74 (factor -> LPAREN expression RPAREN .)
+    MINUS           reduce using rule 74 (factor -> LPAREN expression RPAREN .)
+    PLUS            reduce using rule 74 (factor -> LPAREN expression RPAREN .)
+    GREATER         reduce using rule 74 (factor -> LPAREN expression RPAREN .)
+    GEQ             reduce using rule 74 (factor -> LPAREN expression RPAREN .)
+    LEQ             reduce using rule 74 (factor -> LPAREN expression RPAREN .)
+    LESS            reduce using rule 74 (factor -> LPAREN expression RPAREN .)
+    NEQ             reduce using rule 74 (factor -> LPAREN expression RPAREN .)
+    EQUAL           reduce using rule 74 (factor -> LPAREN expression RPAREN .)
+    LBRACE          reduce using rule 74 (factor -> LPAREN expression RPAREN .)
+    SCOLON          reduce using rule 74 (factor -> LPAREN expression RPAREN .)
+    COMMA           reduce using rule 74 (factor -> LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 74 (factor -> LPAREN expression RPAREN .)
+    RBRACKET        reduce using rule 74 (factor -> LPAREN expression RPAREN .)
+
+
+state 182
+
+    (49) conditional -> IF LPAREN expression RPAREN . compound
+    (50) conditional -> IF LPAREN expression RPAREN . compound ELSE compound
+    (52) compound -> . LBRACE unlabeled_statements RBRACE
+    LBRACE          shift and go to state 47
+
+    compound                       shift and go to state 189
+
+state 183
+
+    (53) assignment -> variable ASSIGN expression SCOLON .
+    LBRACE          reduce using rule 53 (assignment -> variable ASSIGN expression SCOLON .)
+    WRITE           reduce using rule 53 (assignment -> variable ASSIGN expression SCOLON .)
+    READ            reduce using rule 53 (assignment -> variable ASSIGN expression SCOLON .)
+    FALSE           reduce using rule 53 (assignment -> variable ASSIGN expression SCOLON .)
+    TRUE            reduce using rule 53 (assignment -> variable ASSIGN expression SCOLON .)
+    BOOLEAN         reduce using rule 53 (assignment -> variable ASSIGN expression SCOLON .)
+    INTEGER         reduce using rule 53 (assignment -> variable ASSIGN expression SCOLON .)
+    ID              reduce using rule 53 (assignment -> variable ASSIGN expression SCOLON .)
+    SCOLON          reduce using rule 53 (assignment -> variable ASSIGN expression SCOLON .)
+    WHILE           reduce using rule 53 (assignment -> variable ASSIGN expression SCOLON .)
+    IF              reduce using rule 53 (assignment -> variable ASSIGN expression SCOLON .)
+    RETURN          reduce using rule 53 (assignment -> variable ASSIGN expression SCOLON .)
+    GOTO            reduce using rule 53 (assignment -> variable ASSIGN expression SCOLON .)
+    RBRACE          reduce using rule 53 (assignment -> variable ASSIGN expression SCOLON .)
+
+
+state 184
+
+    (27) types_n -> identifier ASSIGN vartype SCOLON .
+    (28) types_n -> identifier ASSIGN vartype SCOLON . types_n
+    (27) types_n -> . identifier ASSIGN vartype SCOLON
+    (28) types_n -> . identifier ASSIGN vartype SCOLON types_n
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    LBRACE          reduce using rule 27 (types_n -> identifier ASSIGN vartype SCOLON .)
+    FUNCTIONS       reduce using rule 27 (types_n -> identifier ASSIGN vartype SCOLON .)
+    VARS            reduce using rule 27 (types_n -> identifier ASSIGN vartype SCOLON .)
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+    ID              shift and go to state 11
+
+    identifier                     shift and go to state 69
+    types_n                        shift and go to state 190
+
+state 185
+
+    (24) variables_n -> identifier_list COLON vartype SCOLON .
+    (25) variables_n -> identifier_list COLON vartype SCOLON . variables_n
+    (24) variables_n -> . identifier_list COLON vartype SCOLON
+    (25) variables_n -> . identifier_list COLON vartype SCOLON variables_n
+    (64) identifier_list -> . identifier COMMA identifier_list
+    (65) identifier_list -> . identifier
+    (103) identifier -> . WRITE
+    (104) identifier -> . READ
+    (105) identifier -> . FALSE
+    (106) identifier -> . TRUE
+    (107) identifier -> . BOOLEAN
+    (108) identifier -> . INTEGER
+    (109) identifier -> . ID
+    LBRACE          reduce using rule 24 (variables_n -> identifier_list COLON vartype SCOLON .)
+    FUNCTIONS       reduce using rule 24 (variables_n -> identifier_list COLON vartype SCOLON .)
+    WRITE           shift and go to state 5
+    READ            shift and go to state 6
+    FALSE           shift and go to state 7
+    TRUE            shift and go to state 8
+    BOOLEAN         shift and go to state 9
+    INTEGER         shift and go to state 10
+    ID              shift and go to state 11
+
+    identifier_list                shift and go to state 73
+    variables_n                    shift and go to state 191
+    identifier                     shift and go to state 71
+
+state 186
+
+    (95) expression_list_n -> COMMA expression_list .
+    RPAREN          reduce using rule 95 (expression_list_n -> COMMA expression_list .)
+
+
+state 187
+
+    (98) simple_expression_n -> additive_operator term simple_expression_n .
+    GREATER         reduce using rule 98 (simple_expression_n -> additive_operator term simple_expression_n .)
+    GEQ             reduce using rule 98 (simple_expression_n -> additive_operator term simple_expression_n .)
+    LEQ             reduce using rule 98 (simple_expression_n -> additive_operator term simple_expression_n .)
+    LESS            reduce using rule 98 (simple_expression_n -> additive_operator term simple_expression_n .)
+    NEQ             reduce using rule 98 (simple_expression_n -> additive_operator term simple_expression_n .)
+    EQUAL           reduce using rule 98 (simple_expression_n -> additive_operator term simple_expression_n .)
+    LBRACE          reduce using rule 98 (simple_expression_n -> additive_operator term simple_expression_n .)
+    SCOLON          reduce using rule 98 (simple_expression_n -> additive_operator term simple_expression_n .)
+    COMMA           reduce using rule 98 (simple_expression_n -> additive_operator term simple_expression_n .)
+    RPAREN          reduce using rule 98 (simple_expression_n -> additive_operator term simple_expression_n .)
+    RBRACKET        reduce using rule 98 (simple_expression_n -> additive_operator term simple_expression_n .)
+
+
+state 188
+
+    (87) mulop_term -> multiplicative_operator factor mulop_term .
+    OR              reduce using rule 87 (mulop_term -> multiplicative_operator factor mulop_term .)
+    MINUS           reduce using rule 87 (mulop_term -> multiplicative_operator factor mulop_term .)
+    PLUS            reduce using rule 87 (mulop_term -> multiplicative_operator factor mulop_term .)
+    GREATER         reduce using rule 87 (mulop_term -> multiplicative_operator factor mulop_term .)
+    GEQ             reduce using rule 87 (mulop_term -> multiplicative_operator factor mulop_term .)
+    LEQ             reduce using rule 87 (mulop_term -> multiplicative_operator factor mulop_term .)
+    LESS            reduce using rule 87 (mulop_term -> multiplicative_operator factor mulop_term .)
+    NEQ             reduce using rule 87 (mulop_term -> multiplicative_operator factor mulop_term .)
+    EQUAL           reduce using rule 87 (mulop_term -> multiplicative_operator factor mulop_term .)
+    LBRACE          reduce using rule 87 (mulop_term -> multiplicative_operator factor mulop_term .)
+    SCOLON          reduce using rule 87 (mulop_term -> multiplicative_operator factor mulop_term .)
+    COMMA           reduce using rule 87 (mulop_term -> multiplicative_operator factor mulop_term .)
+    RPAREN          reduce using rule 87 (mulop_term -> multiplicative_operator factor mulop_term .)
+    RBRACKET        reduce using rule 87 (mulop_term -> multiplicative_operator factor mulop_term .)
+
+
+state 189
+
+    (49) conditional -> IF LPAREN expression RPAREN compound .
+    (50) conditional -> IF LPAREN expression RPAREN compound . ELSE compound
+    LBRACE          reduce using rule 49 (conditional -> IF LPAREN expression RPAREN compound .)
+    WRITE           reduce using rule 49 (conditional -> IF LPAREN expression RPAREN compound .)
+    READ            reduce using rule 49 (conditional -> IF LPAREN expression RPAREN compound .)
+    FALSE           reduce using rule 49 (conditional -> IF LPAREN expression RPAREN compound .)
+    TRUE            reduce using rule 49 (conditional -> IF LPAREN expression RPAREN compound .)
+    BOOLEAN         reduce using rule 49 (conditional -> IF LPAREN expression RPAREN compound .)
+    INTEGER         reduce using rule 49 (conditional -> IF LPAREN expression RPAREN compound .)
+    ID              reduce using rule 49 (conditional -> IF LPAREN expression RPAREN compound .)
+    SCOLON          reduce using rule 49 (conditional -> IF LPAREN expression RPAREN compound .)
+    WHILE           reduce using rule 49 (conditional -> IF LPAREN expression RPAREN compound .)
+    IF              reduce using rule 49 (conditional -> IF LPAREN expression RPAREN compound .)
+    RETURN          reduce using rule 49 (conditional -> IF LPAREN expression RPAREN compound .)
+    GOTO            reduce using rule 49 (conditional -> IF LPAREN expression RPAREN compound .)
+    RBRACE          reduce using rule 49 (conditional -> IF LPAREN expression RPAREN compound .)
+    ELSE            shift and go to state 192
+
+
+state 190
+
+    (28) types_n -> identifier ASSIGN vartype SCOLON types_n .
+    LBRACE          reduce using rule 28 (types_n -> identifier ASSIGN vartype SCOLON types_n .)
+    FUNCTIONS       reduce using rule 28 (types_n -> identifier ASSIGN vartype SCOLON types_n .)
+    VARS            reduce using rule 28 (types_n -> identifier ASSIGN vartype SCOLON types_n .)
+
+
+state 191
+
+    (25) variables_n -> identifier_list COLON vartype SCOLON variables_n .
+    LBRACE          reduce using rule 25 (variables_n -> identifier_list COLON vartype SCOLON variables_n .)
+    FUNCTIONS       reduce using rule 25 (variables_n -> identifier_list COLON vartype SCOLON variables_n .)
+
+
+state 192
+
+    (50) conditional -> IF LPAREN expression RPAREN compound ELSE . compound
+    (52) compound -> . LBRACE unlabeled_statements RBRACE
+    LBRACE          shift and go to state 47
+
+    compound                       shift and go to state 193
+
+state 193
+
+    (50) conditional -> IF LPAREN expression RPAREN compound ELSE compound .
+    LBRACE          reduce using rule 50 (conditional -> IF LPAREN expression RPAREN compound ELSE compound .)
+    WRITE           reduce using rule 50 (conditional -> IF LPAREN expression RPAREN compound ELSE compound .)
+    READ            reduce using rule 50 (conditional -> IF LPAREN expression RPAREN compound ELSE compound .)
+    FALSE           reduce using rule 50 (conditional -> IF LPAREN expression RPAREN compound ELSE compound .)
+    TRUE            reduce using rule 50 (conditional -> IF LPAREN expression RPAREN compound ELSE compound .)
+    BOOLEAN         reduce using rule 50 (conditional -> IF LPAREN expression RPAREN compound ELSE compound .)
+    INTEGER         reduce using rule 50 (conditional -> IF LPAREN expression RPAREN compound ELSE compound .)
+    ID              reduce using rule 50 (conditional -> IF LPAREN expression RPAREN compound ELSE compound .)
+    SCOLON          reduce using rule 50 (conditional -> IF LPAREN expression RPAREN compound ELSE compound .)
+    WHILE           reduce using rule 50 (conditional -> IF LPAREN expression RPAREN compound ELSE compound .)
+    IF              reduce using rule 50 (conditional -> IF LPAREN expression RPAREN compound ELSE compound .)
+    RETURN          reduce using rule 50 (conditional -> IF LPAREN expression RPAREN compound ELSE compound .)
+    GOTO            reduce using rule 50 (conditional -> IF LPAREN expression RPAREN compound ELSE compound .)
+    RBRACE          reduce using rule 50 (conditional -> IF LPAREN expression RPAREN compound ELSE compound .)

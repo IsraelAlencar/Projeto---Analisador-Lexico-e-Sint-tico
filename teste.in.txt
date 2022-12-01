@@ -1,0 +1,36 @@
+int main(var i: int)
+	labels 
+		a, b, c, d;
+	types 
+		a = int; b = boolean; c = Coffe;
+	vars 
+		a,b,c: integer; ab, dc, ei: String;
+	functions 
+		int reduce(algo: Vector){
+			return algo[12];
+		}
+{
+	a[12] = 121221 + 12 * 15 + 5 - 2;
+
+	identificador: if(x == 1 || (!y != x) || (x == ab + 1)){
+		variavel = a[12] && 14;
+		variavel2 = -12;          
+	} else {
+		return abc;
+	}
+
+	# dasdasdas << Comentário
+
+	goto identificador;
+
+	while(i < 1000){
+		i = i + 1;
+		write(i);
+	}
+
+	;
+
+	reduce(x, y);
+
+	return x + 1;
+}
